@@ -1,0 +1,59 @@
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+  <ngb-panel [title]="tableName || 'Unknown Table'">
+    <ng-template ngbPanelContent>
+      <div class="row">
+  
+        <div class="col-md-6">
+            <form class="form">
+                <div class="form-model">
+                    <mat-form-field>
+                        <mat-label>TableName</mat-label>
+                        <input type="text" [(ngModel)]="tableName" name="tableName" matInput>
+                    </mat-form-field>
+                </div>
+    
+                <div class="table-cols">
+                  <ngb-accordion *ngFor="let col of cols;">
+                    <ngb-panel [title]="(col.name || 'Unknown') + ' Column'">
+                      <ng-template ngbPanelContent>
+                        <mat-form-field>
+                          <mat-label>Name</mat-label>
+                          <input type="text" ngModel [(ngModel)]="col.name" name="column-name" matInput>
+                        </mat-form-field>
+                        <form class="column-form">
+                              <div class="form-model">
+                                <mat-form-field>
+                                  <mat-select ngModel [(ngModel)]="col.dtype" name="dtype" [value]="'String'" >
+                                    <mat-option *ngFor="let type of dtypes" [value]="type.dtype">{{type.dtype}}</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                              <div class="form-model">
+                                  <mat-checkbox [checked]="false" ngModel [(ngModel)]="col.isUnqiue" name="isunqiue">is Unique</mat-checkbox>
+                              </div>
+                              <div class="form-model">
+                                <mat-checkbox [checked]="false" ngModel [(ngModel)]="col.isNullable" name="isnullable">Nullable</mat-checkbox>
+                            </div>
+                        </form>
+                        <button mat-button (click)="removeCol(col)">Remove</button>
+                        <button mat-button (click)="logData(col)">Log Data</button>
+                      </ng-template>
+                    </ngb-panel>
+                  </ngb-accordion>
+                </div>    
+            </form>
+
+            <button mat-flat-button (click)="addColumn()">Add new Column</button>
+            <button mat-flat-button (click)="removeSelf()">Remove Table</button>
+            <button mat-flat-button (click)="generate()">Generate Table</button>
+        </div>
+        <div class="col-md-6">
+          <pre>
+            <code [highlight]="code" [languages]="['python']"></code>
+          </pre>
+        </div>
+    </div>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+

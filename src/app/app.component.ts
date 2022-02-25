@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { DatabaseConfiguraion } from './database-config/db-config.actions';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'api-generator';
+
+  constructor(private store:Store<{dbConfig:DatabaseConfiguraion}>){
+  store.select('dbConfig').subscribe(e => console.log(e)
+    )
+  }
 }

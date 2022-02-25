@@ -1,0 +1,22 @@
+<div class="content">
+    
+
+
+    <h1 class="title">API Schema</h1>
+
+    <button class="title generate-button" mat-flat-button (click)="generate()">Generate Schemas</button>
+
+
+
+    <ngb-accordion *ngIf="code">
+        <ngb-panel title="Schemas">
+            <ng-template ngbPanelContent>
+                <pre>
+                    <code [highlight]="code" [languages]="['python']"></code>
+                </pre>
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+
+
+</div>

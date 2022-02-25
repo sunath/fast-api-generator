@@ -1,0 +1,59 @@
+<section id="databaseConfig" >
+
+  <h1 class="title">Project Setup and Database Config</h1>
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-6">
+      <form  class="db-form" [formGroup]="databaseConfigForm">
+        
+        <div class="form-model">
+            <mat-form-field appearance="fill">
+                <mat-label>Project Name</mat-label>
+                <input formControlName="project_name" matInput>
+              </mat-form-field>
+        </div>
+        <div class="form-model">
+            <mat-form-field appearance="fill">
+                <mat-label>DB Name</mat-label>
+                <input formControlName="db_name" matInput>
+              </mat-form-field>
+        </div>
+        <div class="form-model">
+            <mat-form-field appearance="fill">
+                <mat-label>DB TYPE</mat-label>
+                <mat-select formControlName="db_type" (selectionChange)="onDbTypeChange()">
+                  <mat-option *ngFor="let database of db_list;let i = index" [value]="database.dbName" >
+                    {{database.dbName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="form-model">
+            <mat-form-field  appearance="fill">
+                <mat-label>DB Server URL</mat-label>
+                <input formControlName="db_server_url" matInput>
+              </mat-form-field>
+        </div>
+        <div class="form-model">
+            <mat-form-field  appearance="fill">
+                <mat-label>DB UserName</mat-label>
+                <input formControlName="db_username" matInput>
+              </mat-form-field>
+        </div>
+        <div class="form-model">
+            <mat-form-field appearance="fill">
+                <mat-label>DB Password</mat-label>
+                <input formControlName="db_password"  matInput>
+              </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" [disabled]="databaseConfigForm.invalid" (click)="next()">Next</button>
+    </form>
+    
+    </div>
+    <div class="col-lg-6 col-md-6 col-6">
+      <pre>
+        <code [highlight]="previewCode"></code>
+      </pre>
+    </div>
+  </div>
+
+</section>
