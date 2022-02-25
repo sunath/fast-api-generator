@@ -19,6 +19,16 @@ from pydantic import BaseModel
 
     }
 
+
+    for (let table of details){
+        let model = `class ${table.tablename}In(${table.tablename}Base):
+        pass
+`
+
+        data += model
+
+    }
+
     for(let table of details){
         let model = `class ${table.tablename}(${table.tablename}Base):
     id:int

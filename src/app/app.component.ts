@@ -11,7 +11,6 @@ export class AppComponent {
   title = 'api-generator';
 
   constructor(private store:Store<{dbConfig:DatabaseConfiguraion}>){
-  store.select('dbConfig').subscribe(e => console.log(e)
-    )
+  
   }
 }

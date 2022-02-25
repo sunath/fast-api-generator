@@ -25,6 +25,7 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
 import { ApiSchemasComponent } from './api-schemas/api-schemas.component';
 import { ApiRoutersComponent } from './api-routers/api-routers.component';
 import { ApiModelComponent } from './api-model/api-model.component';
+import { FinalizeComponent } from './finalize/finalize.component';
 
 
 
@@ -38,7 +39,8 @@ import { ApiModelComponent } from './api-model/api-model.component';
     DatabaseModelComponent,
     ApiSchemasComponent,
     ApiRoutersComponent,
-    ApiModelComponent
+    ApiModelComponent,
+    FinalizeComponent
   ],
   imports: [
     BrowserModule,
