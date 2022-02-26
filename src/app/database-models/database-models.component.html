@@ -26,11 +26,16 @@
 
 
     <div class="schemas">
-        <app-api-schemas [tables]="codeTables"></app-api-schemas>
+        <app-api-schemas [tables]="codeTables" (receiveSchemaFile)="receiveDataFromSchema($event)"></app-api-schemas>
     </div>
 
     <div class="routers">
-        <app-api-routers [tables]="codeTables"></app-api-routers>
+        <app-api-routers [tables]="codeTables" (updateRoutes)="updateRouters($event)"></app-api-routers>
+    </div>
+    
+
+    <div class="finalize">
+        <app-finalize [tables]="codeTables" [routes]="tablesRoutes" [modelsCode]="wholeCode" [schemasCode]="schemaTextContent"></app-finalize>
     </div>
     
 </div>

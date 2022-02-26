@@ -35,7 +35,7 @@ export class DatabaseModelComponent implements OnInit {
   }
 
   addColumn(){
-    this.cols.push({id:new Date().getTime(),dtype:'String',isNullable:false,isUnqiue:true,name:''})
+    this.cols.push({id:new Date().getTime(),dtype:'String',isNullable:false,isUnique:true,name:''})
   }
 
 

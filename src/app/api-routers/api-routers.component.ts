@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import TableProductModel from '../data/table-product-model';
 import { generateService, TabelServiceCode } from './service-generator';
 
@@ -11,6 +11,8 @@ export class ApiRoutersComponent implements OnInit {
 
   @Input('tables') tables:TableProductModel[]| undefined;
 
+  @Output('updateRoutes') updateRoutes = new EventEmitter();
+
   code:TabelServiceCode[] = []
 
   constructor() { }
@@ -22,6 +24,7 @@ export class ApiRoutersComponent implements OnInit {
 
     if(!this.tables)return;
     this.code = generateService(this.tables)
+    this.updateRoutes.emit({tablesRoutes:this.code})
     
   }
 

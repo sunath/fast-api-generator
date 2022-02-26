@@ -1,1 +1,66 @@
-<p>finalize works!</p>
+
+<h1 class="title">API Routers</h1>
+<button mat-flat-button class="generate" (click)="generate()">Generate Whole Project</button>
+
+
+
+<div class="files">
+
+
+    <div class="file">
+        <ngb-accordion>
+            <ngb-panel title="main.py">
+                <ng-template ngbPanelContent>
+                    <pre>
+                        <code [highlight]="mainFileContent" [languages]="['python']"></code>
+                    </pre>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+        <ngb-accordion>
+            <ngb-panel title="database.py">
+                <ng-template ngbPanelContent>
+                    <pre>
+                        <code [highlight]="dbFileContent" [languages]="['python']"></code>
+                    </pre>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+        <ngb-accordion>
+            <ngb-panel title="models.py">
+                <ng-template ngbPanelContent>
+                    <pre>
+                        <code [highlight]="modelsCode" [languages]="['python']"></code>
+                    </pre>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+        <ngb-accordion>
+            <ngb-panel title="schemas.py">
+                <ng-template ngbPanelContent>
+                    <pre>
+                        <code [highlight]="schemasCode" [languages]="['python']"></code>
+                    </pre>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+        <ngb-accordion>
+            <ngb-panel title="Routes">
+                <ng-template ngbPanelContent>
+                    <ngb-accordion *ngFor="let route of routes">
+                        <ngb-panel title="{{route.tablename.toLowerCase()}}_service.py">
+                            <ng-template ngbPanelContent>
+                                <pre>
+                                    <code [highlight]="route.code" [languages]="['python']"></code>
+                                </pre>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+</div>

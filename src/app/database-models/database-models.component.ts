@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TabelServiceCode } from '../api-routers/service-generator';
 import { modelClassGeneratorWhole } from './model-class-generator';
 
 @Component({
@@ -14,12 +15,21 @@ export class DatabaseModelsComponent implements OnInit {
   }
 
 
+  
+
+
   tables:any[] = []
 
   wholeCode:string = ''
 
+  schemaTextContent:string = ''
+
+
+
 
   codeTables:any[] = []
+
+  tablesRoutes:TabelServiceCode[] = []
 
   addNew(){
     const id  = new Date().getTime()
@@ -31,8 +41,12 @@ export class DatabaseModelsComponent implements OnInit {
     const pos = this.codeTables.indexOf((this.codeTables.filter(e => e.id === data.id)[0]))
     this.codeTables[pos] = data;
     this.wholeCode = modelClassGeneratorWhole(this.codeTables)
-    console.log(this.codeTables)
     
+    
+  }
+
+  updateRouters(data:{tablesRoutes:TabelServiceCode[]}){
+    this.tablesRoutes = data.tablesRoutes
   }
 
   remove(data:{id:any}){
@@ -45,6 +59,13 @@ export class DatabaseModelsComponent implements OnInit {
   get haveTables(){
     return this.tables.length >= 1
   }
+
+
+  receiveDataFromSchema(d:any){
+    this.schemaTextContent = d.code
+  }
+
+
 
 
 

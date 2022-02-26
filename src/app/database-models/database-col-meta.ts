@@ -1,7 +1,8 @@
 export interface DatabaseColumn {
     id:any
-    isUnqiue:boolean
+    isUnique:boolean
     isNullable:boolean
     dtype:string,
-    name:string
+    name:string,
+    defaultValue?:string
 }

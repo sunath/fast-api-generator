@@ -23,5 +23,8 @@ export const ColumnTypes:Column[] = [
     {
         dtype:"Float",
         canUnqiue:true
+    },{
+        dtype:"DateTime",
+        canUnqiue:true
     }
 ]

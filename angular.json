@@ -34,7 +34,6 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
               "src/assets/css/github.css"
-           
             ],
             "scripts": []
           },
@@ -105,6 +104,16 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "api-generator:build:production",
+            "firebaseProject": "fast-api-genertor",
+            "firebaseHostingSite": "fast-api-genertor"
           }
         }
       }

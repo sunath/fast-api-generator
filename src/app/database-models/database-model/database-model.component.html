@@ -29,7 +29,13 @@
                                 </mat-form-field>
                               </div>
                               <div class="form-model">
-                                  <mat-checkbox [checked]="false" ngModel [(ngModel)]="col.isUnqiue" name="isunqiue">is Unique</mat-checkbox>
+                                <mat-form-field>
+                                  <mat-label>Default Value</mat-label>
+                                  <input type="text" matInput ngModel [(ngModel)]="col.defaultValue" name="defaultValue">
+                                </mat-form-field>
+                              </div>
+                              <div class="form-model">
+                                  <mat-checkbox [checked]="false" ngModel [(ngModel)]="col.isUnique" name="isunqiue">is Unique</mat-checkbox>
                               </div>
                               <div class="form-model">
                                 <mat-checkbox [checked]="false" ngModel [(ngModel)]="col.isNullable" name="isnullable">Nullable</mat-checkbox>

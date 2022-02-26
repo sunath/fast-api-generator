@@ -3,7 +3,7 @@ import TableProductModel from "../data/table-product-model";
 
 
 export interface TabelServiceCode{
-    tablename:any
+    tablename:string
     code:string
 }
 
@@ -17,12 +17,14 @@ export function generateService(codeTables:TableProductModel[]){
     for (let table of codeTables){
     let initData = `
 #view ${table.tablename}
-from fastapi import APIRouter
+from fastapi import APIRouter,HTTPException,Depends
+from sqlalchemy.orm import Session
 import schemas
 import models
+from database import get_db
 
 
-api_router = APIRouter(prefix="${table.tablename.toLocaleLowerCase()}")
+api_router = APIRouter(prefix="/${table.tablename.toLocaleLowerCase()}")
 
 `   
 initData+= getAllService(table.tablename)
@@ -59,14 +61,21 @@ let data =  `
 async def create${tableData.tablename.toLocaleLowerCase()} (${tableData.tablename}schema:schemas.${tableData.tablename}In,db:Session = Depends(get_db)):
 `
 
- for(let col of tableData.columns){
-     data+= createUniqueConditions(tableData.tablename,col.name)
+ for(let i = 0 ; i < tableData.columns.length;i++){
+
+    console.log("aT" , tableData.columns[i].name);
+    console.log(tableData.columns[i].isUnique);
+    
+
+    if(tableData.columns[i].isUnique){
+     data+=createUniqueConditions(tableData.tablename,tableData.columns[i].name)
+    }
  }
 
  data += `
     model = models.${tableData.tablename}(**${tableData.tablename}schema.dict())
     db.add(model)
-    db.commit(model)
+    db.commit()
     db.refresh(model)
     return model
  `
@@ -75,8 +84,8 @@ async def create${tableData.tablename.toLocaleLowerCase()} (${tableData.tablenam
 
 const createUniqueConditions = (tablename:string,columnname:string) => {
    return `
-    if db.query(model.${tablename}).filter(models${tablename}.${columnname} == ${tablename}schema.${columnname}).first():
-        raise HTTPException(status_code=403,details="${tablename} already defined with that ${columnname}")
+    if db.query(models.${tablename}).filter(models.${tablename}.${columnname} == ${tablename}schema.${columnname}).first():
+        raise HTTPException(status_code=403,detail="${tablename} already defined with that ${columnname}")
     `
 }
 

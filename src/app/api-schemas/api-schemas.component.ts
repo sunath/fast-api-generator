@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import TableProductModel from '../data/table-product-model';
 import { makeAPISchema } from './api-schemas-generator';
 
@@ -11,6 +11,9 @@ export class ApiSchemasComponent implements OnInit {
 
 
   @Input('tables') tables:TableProductModel[]| undefined;
+
+
+  @Output('receiveSchemaFile') receiveSchemaFile = new EventEmitter()
 
   constructor() { }
 
@@ -25,6 +28,7 @@ export class ApiSchemasComponent implements OnInit {
   generate(){
     if(!this.tables)return;
     this.code = makeAPISchema(this.tables)
+    this.receiveSchemaFile.emit({code:this.code})
     
   }
 

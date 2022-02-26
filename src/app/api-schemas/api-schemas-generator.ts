@@ -4,7 +4,7 @@ export function makeAPISchema(details:TableProductModel[]){
 
     let data = `from typing import List, Optional
 from pydantic import BaseModel
-
+from datetime import datetime
 `
 
     for (let table of details){
@@ -12,7 +12,16 @@ from pydantic import BaseModel
 `
 
         for(let tableMeataData of table.columns){
-            model += "   "+tableMeataData.name + ":"+ changeIntoPython(tableMeataData.dtype)+"\n"
+
+            if(!tableMeataData.defaultValue){
+                    
+                
+                model += "   "+tableMeataData.name + ":"+ changeIntoPython(tableMeataData.dtype)+"\n"    
+
+            }
+            
+            
+    
         }
 
         data += model
@@ -56,6 +65,8 @@ function changeIntoPython(dtype:string){
             return 'bool'
         case 'Float':
             return 'float'
+        case 'DateTime':
+            return 'datetime'
         default:
             return 'str'
     }

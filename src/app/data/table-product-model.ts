@@ -9,5 +9,6 @@ interface DatabaseExportColumn{
     dtype:string
     isNullable:boolean
     isUnique:boolean
-    name:string
+    name:string,
+    defaultValue?:string
 }
