@@ -17,3 +17,7 @@
     display: grid;
     place-items: center;
 }
+
+mat-form-field{
+    width: 100%;
+}

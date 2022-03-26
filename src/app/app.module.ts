@@ -26,6 +26,7 @@ import { ApiSchemasComponent } from './api-schemas/api-schemas.component';
 import { ApiRoutersComponent } from './api-routers/api-routers.component';
 import { ApiModelComponent } from './api-model/api-model.component';
 import { FinalizeComponent } from './finalize/finalize.component';
+import { CustomSchemaResultComponent } from './api-schemas/custom-schema-result/custom-schema-result.component';
 
 
 
@@ -40,7 +41,8 @@ import { FinalizeComponent } from './finalize/finalize.component';
     ApiSchemasComponent,
     ApiRoutersComponent,
     ApiModelComponent,
-    FinalizeComponent
+    FinalizeComponent,
+    CustomSchemaResultComponent
   ],
   imports: [
     BrowserModule,

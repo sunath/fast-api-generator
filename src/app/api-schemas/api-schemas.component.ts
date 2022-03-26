@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import TableProductModel from '../data/table-product-model';
 import { makeAPISchema } from './api-schemas-generator';
+import CustomSchema from './custom-schema-model';
 
 @Component({
   selector: 'app-api-schemas',
@@ -15,13 +17,51 @@ export class ApiSchemasComponent implements OnInit {
 
   @Output('receiveSchemaFile') receiveSchemaFile = new EventEmitter()
 
+  mockTables:TableProductModel[] = []
+
+
+  
+
+
+
+  customSchemas:CustomSchema[] = []
+
+
+  nextID = 1;
+
+
+
+
+  get availableTables()
+{
+    if (!this.tables) return [];
+    return this.tables?.map(e => e.tablename)
+}
+   
+
+
   constructor() { }
 
 
   code:string = ""
 
   ngOnInit(): void {
-    console.log(this.tables);
+    if(this.tables){
+      this.mockTables = this.tables.map(e => {
+          e.columns.push({
+            dtype:'int',
+            id:e.columns.length,
+            isNullable:false,
+            isUnique:true,
+            name:'id'
+          })
+
+          return e
+      });
+
+      console.log(this.mockTables);
+      
+    }
     
   }
 
@@ -32,5 +72,34 @@ export class ApiSchemasComponent implements OnInit {
     
   }
 
+
+  createNewCustomSchema(){
+    this.customSchemas.push({targetModel:'',fields:[],schemaName:'',id:this.nextID})
+    this.nextID +=1;
+  }
+
+
+  changeData($event:MatSelectChange){
+    console.log($event.value);
+  }
+
+
+  getSchemaAvailableProperties(id:number){
+      const tableNameSchema = this.customSchemas.filter(e => e.id === id)[0];
+      const table = this.mockTables?.filter(e => e.tablename == tableNameSchema.targetModel)[0];
+      const haveForeignKeys  = table && table?.foreignKeys.length >= 1;
+      if (table){
+        return !haveForeignKeys ?  table.columns.map(e => e.name).
+        filter(e => tableNameSchema.fields.filter(x => x===e).length <= 0 ) : 
+        [...table.columns.map(e => e.name),...table.foreignKeys.map(e=> e.column_name)]
+        .filter(e => tableNameSchema.fields.filter(x => x===e).length <= 0)
+      }
+      return []
+  }
+
+  addPropToTheSchema(id:number,prop:MatSelect){
+    let customSchema = this.customSchemas.filter(e => e.id === id)[0]
+    customSchema.fields.push(prop.value)  
+  }
 
 }
