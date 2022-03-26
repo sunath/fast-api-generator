@@ -6,3 +6,10 @@ export interface DatabaseColumn {
     name:string,
     defaultValue?:string
 }
+
+
+export interface DatabaseForeginKey {
+    table_name:string,
+    column_name:string
+    
+}

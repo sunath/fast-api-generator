@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TabelServiceCode } from '../api-routers/service-generator';
+import TableProductModel from '../data/table-product-model';
 import { modelClassGeneratorWhole } from './model-class-generator';
 
 @Component({
@@ -37,7 +38,7 @@ export class DatabaseModelsComponent implements OnInit {
     this.codeTables.push({id:id})
   }
 
-  update(data:any){
+  update(data:TableProductModel){
     const pos = this.codeTables.indexOf((this.codeTables.filter(e => e.id === data.id)[0]))
     this.codeTables[pos] = data;
     this.wholeCode = modelClassGeneratorWhole(this.codeTables)

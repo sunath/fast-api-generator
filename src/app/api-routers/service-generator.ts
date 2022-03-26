@@ -1,5 +1,6 @@
 
 import TableProductModel from "../data/table-product-model";
+import { DatabaseForeginKey } from "../database-models/database-col-meta";
 
 
 export interface TabelServiceCode{
@@ -60,6 +61,13 @@ let data =  `
 @api_router.post("/")
 async def create${tableData.tablename.toLocaleLowerCase()} (${tableData.tablename}schema:schemas.${tableData.tablename}In,db:Session = Depends(get_db)):
 `
+
+
+if(tableData.foreignKeys.length >= 1){
+    data+=checkForeignKeys(tableData.foreignKeys,tableData.tablename) + "\n";
+    console.log(data);
+    
+}
 
  for(let i = 0 ; i < tableData.columns.length;i++){
 
@@ -128,3 +136,17 @@ const updateArgsCreator = (tableData:TableProductModel,tableName:string) => {
     return data
 
 }
+
+
+const checkForeignKeys = (foreignKeys:DatabaseForeginKey[],tableName:string,tabs=1) => {
+    const spaces = new Array(tabs*4).fill(" ").reduce((p,c) => p+c);
+    const result =  foreignKeys.map(e => {
+        return [`${e.column_name} = db.query(models.${e.table_name}).filter(models.${e.table_name}.id == ${tableName}schema.${e.column_name} ).first()`,
+        `if not ${e.column_name}:`,
+        `   raise HTTPException(status_code=404,details="${e.column_name} value didn't met")\n`
+    ]
+    }).map(e => e.map(x => spaces + x)).map(e => e.reduce((p,c) => p+"\n"+c)).reduce((p,v) => p+"\n"+v)
+    return result;
+}
+
+

@@ -56,6 +56,7 @@ import { FinalizeComponent } from './finalize/finalize.component';
     ReactiveFormsModule,
     CdkAccordionModule,
     FormsModule,
+    
     StoreModule.forRoot({dbConfig:dbConfigReducer}),
     HighlightModule
   ],

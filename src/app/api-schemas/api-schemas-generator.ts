@@ -1,3 +1,4 @@
+import { DatabaseForeginKey } from './../database-models/database-col-meta';
 import TableProductModel from "../data/table-product-model";
 
 export function makeAPISchema(details:TableProductModel[]){
@@ -16,12 +17,13 @@ from datetime import datetime
             if(!tableMeataData.defaultValue){
                     
                 
-                model += "   "+tableMeataData.name + ":"+ changeIntoPython(tableMeataData.dtype)+"\n"    
+                model += "    "+tableMeataData.name + ":"+ changeIntoPython(tableMeataData.dtype)+"\n"    
 
-            }
-            
-            
-    
+            } 
+            if(table.foreignKeys.length >= 1){
+                model += generateSchemaForeignkeys(table.foreignKeys);
+                model += "\n"
+            }   
         }
 
         data += model
@@ -34,7 +36,7 @@ from datetime import datetime
         pass
 `
 
-        data += model
+        data += model;
 
     }
 
@@ -48,6 +50,10 @@ from datetime import datetime
         }
 
         data += model
+
+        if(table.foreignKeys.length >= 1){
+            data += generateSchemaForeignkeys(table.foreignKeys) + "\n"
+        }
     }
 
     return data
@@ -71,3 +77,6 @@ function changeIntoPython(dtype:string){
             return 'str'
     }
 }
+
+
+const generateSchemaForeignkeys = (keys:DatabaseForeginKey[],tabs=1) => keys.map(e => new Array(tabs*4).fill(" ").reduce((e,v) => e+v) +e.column_name+":int").reduce((e,v) => e+"\n"+v)

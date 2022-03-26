@@ -8,7 +8,7 @@
     </div>
 
     <div class="tables">
-        <app-database-model *ngFor="let table of tables" [tableMetaData]="table" (tableRemoveAction)="remove($event)" (tableUpdateAction)="update($event)" ></app-database-model>
+        <app-database-model *ngFor="let table of tables" [tableMetaData]="table" (tableRemoveAction)="remove($event)" (tableUpdateAction)="update($event)" [allTables]="codeTables" ></app-database-model>
     </div>
 
 

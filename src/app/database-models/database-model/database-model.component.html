@@ -47,9 +47,43 @@
                     </ngb-panel>
                   </ngb-accordion>
                 </div>    
+
+                <div class="foreign-keys">
+                  <ngb-accordion *ngIf="foreignKeys.length != 0">
+                    <ngb-panel title="Foreign Keys">
+                      <ng-template ngbPanelContent>
+                        <ngb-accordion *ngFor="let table of foreignKeys">
+                          <ngb-panel [title]="table.table_name + ' > ' +  table.column_name">
+                            <ng-template ngbPanelContent>
+                            <div class="column-form">
+                              <div class="form-model">
+                                <mat-form-field>
+                                  <mat-label>Table to map</mat-label>
+                                  <mat-select ngModel [(ngModel)]="table.table_name" name="foreign-key-{{table.table_name}}">
+                                    <mat-option *ngFor="let other_table of availableTablesForTable" [value]="other_table.tablename">{{other_table.tablename}}</mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </div>
+                              <div class="form-model">
+                                <mat-form-field>
+                                 <mat-label>Table Column Name</mat-label>
+                                 <input matInput ngModel [(ngModel)]="table.column_name" name="{{table.table_name + table.column_name}} ">
+                                </mat-form-field>
+                              </div>
+                              <button mat-button (click)="removeForeignKey(table)">Remove</button>
+                            </div>
+                            </ng-template>
+                          </ngb-panel>
+                        </ngb-accordion>
+                      </ng-template>
+                    </ngb-panel>
+                  </ngb-accordion>
+                </div>
             </form>
 
             <button mat-flat-button (click)="addColumn()">Add new Column</button>
+            <button mat-flat-button (click)="addForeignKey()">Add Foreign Key</button>
+            <button mat-flat-button (click)="checkForeignKey()">Check Foreign Key</button>
             <button mat-flat-button (click)="removeSelf()">Remove Table</button>
             <button mat-flat-button (click)="generate()">Generate Table</button>
         </div>

@@ -1,8 +1,8 @@
-import { DatabaseColumn } from "./database-col-meta";
+import { DatabaseColumn, DatabaseForeginKey } from "./database-col-meta";
 
 
 
-export function modelClassGenerator(details:DatabaseColumn[],tablename:string){
+export function modelClassGenerator(details:DatabaseColumn[],tablename:string,foreignKeys:DatabaseForeginKey[]){
 
 
 
@@ -22,15 +22,28 @@ class ${tablename}(Base):
         }else{
 
         data+= `        ${modify.name} = Column(${modify.dtype}, unqiue=${modify.isUnqiue}, nullable=${modify.isNullable})\n`
+        
+    }
+
+    if(foreignKeys.length >= 1){
+    data+=  mapForeignKeysToDatabase(foreignKeys,2).reduce((x,v) => x+"\n"+v);
     }
 
 }
     return data
 }
 
+
+const mapForeignKeysToDatabase =  (keys:DatabaseForeginKey[],tabs:number=1) => {
+    const blanks = new Array(tabs*4).fill(" ").reduce((e,v) => e+v)
+    return keys.map(e => blanks+`${e.column_name} = Column(ForeignKey("${e.table_name.toLowerCase()}.id",ondelete="CASCADE"),nullable=False)`)
+}
+
 export function modelClassGeneratorWhole(tables:any[]){
 
 
+    console.log(tables,"test for 2");
+    
     
 
     let data = `from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float,func,DateTime
@@ -58,8 +71,14 @@ from database import Base
             }else{
                 newData+=`    ${modify.name} = Column(${modify.dtype},unique=${modify.isUnqiue},nullable=${modify.isNullable})\n`
             }
-
         }
+
+        if(table.foreignKeys.length >= 1){
+            newData+=mapForeignKeysToDatabase(table.foreignKeys).reduce((e,v) => e+"\n"+v)
+            newData+="\n"
+        }
+
+
 
         newData+="\n"
         data+=newData
