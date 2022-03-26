@@ -17,6 +17,10 @@ export class ApiSchemasComponent implements OnInit {
 
   @Output('receiveSchemaFile') receiveSchemaFile = new EventEmitter()
 
+
+  @Output('customSchemaChange') customSchemaChange = new EventEmitter<CustomSchema[]>();
+
+
   mockTables:TableProductModel[] = []
 
 
@@ -47,22 +51,27 @@ export class ApiSchemasComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.tables){
-      this.mockTables = this.tables.map(e => {
-          e.columns.push({
-            dtype:'int',
-            id:e.columns.length,
-            isNullable:false,
-            isUnique:true,
-            name:'id'
-          })
-
-          return e
-      });
-
+      this.mockTables = this.setupMockData() || []
       console.log(this.mockTables);
       
     }
     
+  }
+
+
+  setupMockData(){
+    return this.tables?.map(e => {
+      e.columns.push({
+        dtype:'int',
+        id:e.columns.length,
+        isNullable:false,
+        isUnique:true,
+        name:'id'
+      })
+
+      return e
+  });
+
   }
 
   generate(){
@@ -74,8 +83,14 @@ export class ApiSchemasComponent implements OnInit {
 
 
   createNewCustomSchema(){
+    if(!this.mockTables || this.mockTables.length <= 0){
+      this.mockTables = this.setupMockData() || []
+    }
+    console.log(this.mockTables);
+    
     this.customSchemas.push({targetModel:'',fields:[],schemaName:'',id:this.nextID})
     this.nextID +=1;
+    
   }
 
 
@@ -100,6 +115,18 @@ export class ApiSchemasComponent implements OnInit {
   addPropToTheSchema(id:number,prop:MatSelect){
     let customSchema = this.customSchemas.filter(e => e.id === id)[0]
     customSchema.fields.push(prop.value)  
+  }
+
+
+  updateCustomSchema(){
+    this.customSchemaChange.emit(this.customSchemas)
+  }
+
+  removeCustomSchema(id:number){
+    const x = this.customSchemas.filter(e => e.id == id)[0]
+    const index = this.customSchemas.indexOf(x);
+    this.customSchemas.splice(index,1);
+    this.customSchemaChange.emit(this.customSchemas)
   }
 
 }

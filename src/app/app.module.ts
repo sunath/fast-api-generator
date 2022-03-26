@@ -11,6 +11,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatFormFieldModule} from "@angular/material/form-field"
 import {MatInputModule} from "@angular/material/input"
 import {MatSelectModule} from "@angular/material/select"
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from "@angular/material/checkbox"
 import { HeroComponent } from './hero/hero.component';
 import { DatabaseConfigComponent } from './database-config/database-config.component';
@@ -27,6 +28,8 @@ import { ApiRoutersComponent } from './api-routers/api-routers.component';
 import { ApiModelComponent } from './api-model/api-model.component';
 import { FinalizeComponent } from './finalize/finalize.component';
 import { CustomSchemaResultComponent } from './api-schemas/custom-schema-result/custom-schema-result.component';
+import { ApiRouterCustomComponent } from './api-routers/api-router/api-router-custom/api-router-custom.component';
+import { ApiRouterEndpointChooserComponent } from './api-routers/api-router/api-router-endpoint-chooser/api-router-endpoint-chooser.component';
 
 
 
@@ -42,7 +45,9 @@ import { CustomSchemaResultComponent } from './api-schemas/custom-schema-result/
     ApiRoutersComponent,
     ApiModelComponent,
     FinalizeComponent,
-    CustomSchemaResultComponent
+    CustomSchemaResultComponent,
+    ApiRouterCustomComponent,
+    ApiRouterEndpointChooserComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +58,7 @@ import { CustomSchemaResultComponent } from './api-schemas/custom-schema-result/
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
     MatSelectModule,
     MatCheckboxModule,
     ReactiveFormsModule,

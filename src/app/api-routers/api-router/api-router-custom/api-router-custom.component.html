@@ -1,0 +1,68 @@
+
+<ngb-accordion>
+    <ngb-panel title="Custom EndPoints">
+        <ng-template ngbPanelContent>
+            <button mat-flat-button color="primary" (click)="openSelectEndPointDialog()">Add A End Point</button>
+
+            <div class="get" *ngIf="checkVisibility(getEndpoints)">
+
+                <ngb-accordion>
+                    <ngb-panel title="GET Endpoints">
+                        <ng-template ngbPanelContent>
+                            <ngb-accordion *ngFor="let getEndpointFunc of getEndpoints">
+                                <ngb-panel title="{{getEndpointFunc.endpointName}}">
+                                    <ng-template ngbPanelContent>
+                                        {{getEndpointFunc.endpointName}}
+                                    </ng-template>
+                                </ngb-panel>
+                            </ngb-accordion>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+
+
+
+
+            </div>
+
+            <div class="post" *ngIf="checkVisibility(postEndpoints)">
+                <ngb-accordion>
+                    <ngb-panel>
+                        <ng-template ngbPanelContent>
+
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+
+
+
+            <div class="put" *ngIf="checkVisibility(putEndpoints)">
+                <ngb-accordion>
+                    <ngb-panel>
+                        <ng-template ngbPanelContent>
+
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+
+
+            <div class="delete" *ngIf="checkVisibility(deleteEndpoints)">
+                <ngb-accordion>
+                    <ngb-panel>
+                        <ng-template ngbPanelContent>
+
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+
+
+
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+
+
+    

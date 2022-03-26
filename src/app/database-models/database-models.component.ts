@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TabelServiceCode } from '../api-routers/service-generator';
+import CustomSchema from '../api-schemas/custom-schema-model';
 import TableProductModel from '../data/table-product-model';
 import { modelClassGeneratorWhole } from './model-class-generator';
 
@@ -16,8 +17,7 @@ export class DatabaseModelsComponent implements OnInit {
   }
 
 
-  
-
+  customSchemas:CustomSchema[] = [];
 
   tables:any[] = []
 
@@ -66,6 +66,13 @@ export class DatabaseModelsComponent implements OnInit {
     this.schemaTextContent = d.code
   }
 
+
+
+  acceptCustomSchemas(args:CustomSchema[]){
+    this.customSchemas = args;
+    console.log(this.customSchemas);
+    
+  }
 
 
 

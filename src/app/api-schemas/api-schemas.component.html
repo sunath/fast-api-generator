@@ -47,14 +47,14 @@
                                             </mat-select>
                                         </mat-form-field>
                                         <button mat-flat-button (click)="addPropToTheSchema(customSchema.id,propState)">Add New Property</button>
+                                        <button mat-flat-button color="warn" (click)="removeCustomSchema(customSchema.id)">Remove</button>
                                     </div>
-                                    <button mat-flat-button>Add Prop</button>
                                 </form>
                                 <div class="col-md-6">
                                    <app-custom-schema-result [fields]="customSchema.fields"></app-custom-schema-result>
                                 </div>
                             </div>
-                          
+                            <button mat-flat-button color="primary" (click)="updateCustomSchema()">Update Schema</button>
                         </ng-template>
                     </ngb-panel>
                 </ngb-accordion>
