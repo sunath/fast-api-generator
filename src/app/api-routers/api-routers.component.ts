@@ -1,5 +1,7 @@
+import { AppDependModel } from './../depends/depend-model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import TableProductModel from '../data/table-product-model';
+
 import { generateService, TabelServiceCode } from './service-generator';
 
 @Component({
@@ -13,19 +15,24 @@ export class ApiRoutersComponent implements OnInit {
 
   @Output('updateRoutes') updateRoutes = new EventEmitter();
 
+
+
+  
+
   code:TabelServiceCode[] = []
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit(): void {
   }
 
   generate(){
 
+    
     if(!this.tables)return;
     this.code = generateService(this.tables)
     this.updateRoutes.emit({tablesRoutes:this.code})
-    
   }
 
 }

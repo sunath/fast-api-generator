@@ -1,9 +1,13 @@
 
-import { Component, OnInit } from '@angular/core';
+
+
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import IApiEndPointChooserDataModel from '../api-router-endpoint-chooser-data-model';
 import { ApiRouterEndpointChooserComponent } from '../api-router-endpoint-chooser/api-router-endpoint-chooser.component';
 import { GetEndpointFunction, PostEndpointFunction } from './api-custom-def';
+
+import TableProductModel from "../../../data/table-product-model";
 
 @Component({
   selector: 'app-api-router-custom',
@@ -11,6 +15,9 @@ import { GetEndpointFunction, PostEndpointFunction } from './api-custom-def';
   styleUrls: ['./api-router-custom.component.css']
 })
 export class ApiRouterCustomComponent implements OnInit {
+
+
+  @Input('models') models:TableProductModel[] | undefined = []
 
   constructor(public dialog:MatDialog) { }
 
@@ -44,7 +51,7 @@ export class ApiRouterCustomComponent implements OnInit {
   queryTheSelectType(e:string){
     switch(e){
       case "GET":
-        this.getEndpoints.push(new GetEndpointFunction('unknown'+this.getEndpoints.length+1))
+        this.getEndpoints.push(new GetEndpointFunction('unknown'+this.getEndpoints.length+1,""))
         break;
       default:
         console.log("Hello");
@@ -53,6 +60,15 @@ export class ApiRouterCustomComponent implements OnInit {
 
   checkVisibility(x:any[]):boolean{
     return x.length >= 1
+  }
+
+
+
+  deleteGetEndPoint(args:any){
+    let index:number = this.getEndpoints.indexOf(args)
+    if(index >= 0){
+      this.getEndpoints.splice(index,1)
+    }
   }
 
 }

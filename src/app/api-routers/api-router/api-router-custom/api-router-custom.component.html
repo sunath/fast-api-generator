@@ -12,7 +12,7 @@
                             <ngb-accordion *ngFor="let getEndpointFunc of getEndpoints">
                                 <ngb-panel title="{{getEndpointFunc.endpointName}}">
                                     <ng-template ngbPanelContent>
-                                        {{getEndpointFunc.endpointName}}
+                                       <app-api-get [apiClass]="getEndpointFunc" [models]="models" (deleteGetEndPointMethod)="deleteGetEndPoint($event)"></app-api-get>
                                     </ng-template>
                                 </ngb-panel>
                             </ngb-accordion>

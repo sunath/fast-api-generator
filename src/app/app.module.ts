@@ -30,6 +30,10 @@ import { FinalizeComponent } from './finalize/finalize.component';
 import { CustomSchemaResultComponent } from './api-schemas/custom-schema-result/custom-schema-result.component';
 import { ApiRouterCustomComponent } from './api-routers/api-router/api-router-custom/api-router-custom.component';
 import { ApiRouterEndpointChooserComponent } from './api-routers/api-router/api-router-endpoint-chooser/api-router-endpoint-chooser.component';
+import { ApiGetComponent } from './api-routers/api-router/api-get/api-get.component';
+import { ApiPostComponent } from './api-routers/api-router/api-post/api-post.component';
+import { ApiPutComponent } from './api-routers/api-router/api-put/api-put.component';
+import { ApiDeleteComponent } from './api-routers/api-router/api-delete/api-delete.component';
 
 
 
@@ -47,7 +51,11 @@ import { ApiRouterEndpointChooserComponent } from './api-routers/api-router/api-
     FinalizeComponent,
     CustomSchemaResultComponent,
     ApiRouterCustomComponent,
-    ApiRouterEndpointChooserComponent
+    ApiRouterEndpointChooserComponent,
+    ApiGetComponent,
+    ApiPostComponent,
+    ApiPutComponent,
+    ApiDeleteComponent
   ],
   imports: [
     BrowserModule,
