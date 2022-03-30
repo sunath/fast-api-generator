@@ -1,4 +1,4 @@
-import  TableProductModel  from 'src/app/data/table-product-model';
+import  {TableProductModel}  from 'src/app/data/table-product-model';
 import { GetEndpointFunction } from './../api-router-custom/api-custom-def';
 import { IApiGetFunctionStep } from './get_depend_func-model';
 
@@ -47,8 +47,8 @@ export const buildFullGetDefVersion = (currentBuildVersion:string,steps:IApiGetF
 
 
     return newResult+`
-    return db` + bigSteps.map((e,i) => e.map((x) => convertIntoPythonString(x,modelName)).reduce((p,v) => p+v)).map((e,i) => {
-        return e
+    return ` + bigSteps.map((e,i) => e.map((x) => convertIntoPythonString(x,modelName)).reduce((p,v) => p+v)).map((e,i) => {
+        return i == bigSteps.length -1 ? `db${e} ` :  `db${e} | `
     }).reduce((p,v) => p+v)
 }
 

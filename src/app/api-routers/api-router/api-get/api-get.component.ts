@@ -1,6 +1,6 @@
 import { AppDependModel, AppFunction } from './../../../depends/depend-model';
 import { buildFullGetDefVersion, generateGetFunction, IApiGetQueryParam } from './api-get-func';
-import  TableProductModel  from 'src/app/data/table-product-model';
+import  {TableProductModel}  from 'src/app/data/table-product-model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GetEndpointFunction } from '../api-router-custom/api-custom-def';
 import createDBDepend from '../../db-depend';

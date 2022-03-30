@@ -30,7 +30,7 @@
     </div>
 
     <div class="routers">
-        <app-api-routers [tables]="codeTables" (updateRoutes)="updateRouters($event)"></app-api-routers>
+        <app-api-routers [tables]="codeTables" [customSchemas]="customSchemas" (updateRoutes)="updateRouters($event)"></app-api-routers>
     </div>
     
 

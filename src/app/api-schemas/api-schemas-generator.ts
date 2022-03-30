@@ -1,5 +1,5 @@
 import { DatabaseForeginKey } from './../database-models/database-col-meta';
-import TableProductModel from "../data/table-product-model";
+import {TableProductModel} from "../data/table-product-model";
 
 export function makeAPISchema(details:TableProductModel[]){
 

@@ -1,13 +1,11 @@
-
-
-
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import IApiEndPointChooserDataModel from '../api-router-endpoint-chooser-data-model';
 import { ApiRouterEndpointChooserComponent } from '../api-router-endpoint-chooser/api-router-endpoint-chooser.component';
 import { GetEndpointFunction, PostEndpointFunction } from './api-custom-def';
 
-import TableProductModel from "../../../data/table-product-model";
+import {TableProductModel} from "../../../data/table-product-model";
+import CustomSchema from 'src/app/api-schemas/custom-schema-model';
 
 @Component({
   selector: 'app-api-router-custom',
@@ -18,6 +16,9 @@ export class ApiRouterCustomComponent implements OnInit {
 
 
   @Input('models') models:TableProductModel[] | undefined = []
+
+  @Input('customSchemas')
+  customSchemas!:CustomSchema[];
 
   constructor(public dialog:MatDialog) { }
 
@@ -53,8 +54,12 @@ export class ApiRouterCustomComponent implements OnInit {
       case "GET":
         this.getEndpoints.push(new GetEndpointFunction('unknown'+this.getEndpoints.length+1,""))
         break;
+      case "POST":
+        this.postEndpoints.push(new PostEndpointFunction('unknwown'+this.getEndpoints.length+1,""))
+        break
       default:
-        console.log("Hello");
+        console.log("Hehe");
+        
     }
   }
 

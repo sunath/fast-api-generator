@@ -1,7 +1,7 @@
 
 
 import { filter } from 'rxjs';
-import TableProductModel  from 'src/app/data/table-product-model';
+import {TableProductModel}  from 'src/app/data/table-product-model';
 
 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TabelServiceCode } from '../api-routers/service-generator';
 import CustomSchema from '../api-schemas/custom-schema-model';
-import TableProductModel from '../data/table-product-model';
+import {TableProductModel} from '../data/table-product-model';
 import { modelClassGeneratorWhole } from './model-class-generator';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TabelServiceCode } from '../api-routers/service-generator';
-import TableProductModel from '../data/table-product-model';
+import {TableProductModel} from '../data/table-product-model';
 import { createMainFile } from './main-file.generator';
 
 @Component({

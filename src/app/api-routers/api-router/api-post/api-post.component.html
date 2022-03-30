@@ -1,1 +1,70 @@
-<p>api-post works!</p>
+<h2 class="text-secondary text-center">{{apiClass.endpointName}}</h2>
+
+
+<div class="form-parent">
+
+
+    <form>
+
+        <div class="form-model">
+            <mat-form-field>
+                <mat-label>Post Endpoint Name</mat-label>
+                <input type="text" matInput ngModel [(ngModel)]="apiClass.endpointName" name="{{apiClass.endpointName + apiClass.id + '-name-endpoint' + apiClass.endPointType}}">
+            </mat-form-field>
+        </div>
+
+        <div class="form-model">
+            <mat-form-field>
+                <mat-label>Post Endpoint Target Model</mat-label>
+                <mat-select  ngModel [(ngModel)]="apiClass.endpointTargetModel" name="{{apiClass.endpointName + apiClass.id + '-name-endpoint' + apiClass.endPointType}}">
+                    <mat-option *ngFor="let target of tablesProductModels" [value]="target.tablename">{{target.tablename}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="schemas">
+            <h3 class="text-primary text-center">Post Endpoint Schemas</h3>
+            <div class="schema">
+                <div class="form-model">
+                    <mat-form-field>
+                        <mat-label>Schema Name</mat-label>
+                        <input type="text" matInput ngModel [(ngModel)]="nextSchemaVariableName" name="{{apiClass.endpointName + apiClass.id + '-schema-endpoint' + apiClass.endPointType}}">
+                    </mat-form-field>
+                </div>
+
+
+
+                <div class="form-model">
+                    <mat-form-field>
+                        <mat-label>Post Endpoint Target Schema</mat-label>
+                        <mat-select  ngModel [(ngModel)]="nextSchemaName" name="{{apiClass.endpointName + apiClass.id + 'schema-name-' + apiClass.endPointType}}">
+                            <mat-option *ngFor="let target of schemaList" [value]="target">{{target}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <button mat-flat-button color="primary" (click)="addSchema()">Add this schema</button>
+
+                <div class="preview-schemas">
+                    <h1 class="text-center">Post Endpoint Active Schemas</h1>
+                    <div class="preview-schema" *ngFor="let s of schemaActiveList">
+                        <h2 class="text-primary text-center">{{s.variableName}} : {{s.schemaName}}</h2>
+                        <button mat-mini-fab (click)="deleteActiveSchema(s)">    
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="before-conditions-commit"></div>
+
+
+
+            </div>
+        </div>
+
+
+    </form>
+
+</div>

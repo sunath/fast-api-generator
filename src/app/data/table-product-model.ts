@@ -1,6 +1,6 @@
 import { DatabaseForeginKey } from './../database-models/database-col-meta';
 
-export default interface TableProductModel {
+export  interface TableProductModel {
     id:number,
     columns:DatabaseExportColumn[],
     tablename:string,

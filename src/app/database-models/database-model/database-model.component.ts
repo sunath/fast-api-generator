@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { ColumnTypes } from 'src/app/data/col-types';
-import TableProductModel from 'src/app/data/table-product-model';
+import {TableProductModel} from 'src/app/data/table-product-model';
 import { DatabaseColumn, DatabaseForeginKey } from '../database-col-meta';
 import { modelClassGenerator } from '../model-class-generator';
 

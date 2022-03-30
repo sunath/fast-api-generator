@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
-import TableProductModel from '../data/table-product-model';
+import {TableProductModel} from '../data/table-product-model';
 import { makeAPISchema } from './api-schemas-generator';
 import CustomSchema from './custom-schema-model';
 

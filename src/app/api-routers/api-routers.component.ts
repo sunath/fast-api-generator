@@ -1,8 +1,10 @@
+
 import { AppDependModel } from './../depends/depend-model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import TableProductModel from '../data/table-product-model';
+import {TableProductModel} from '../data/table-product-model';
 
 import { generateService, TabelServiceCode } from './service-generator';
+import CustomSchema from '../api-schemas/custom-schema-model';
 
 @Component({
   selector: 'app-api-routers',
@@ -12,6 +14,9 @@ import { generateService, TabelServiceCode } from './service-generator';
 export class ApiRoutersComponent implements OnInit {
 
   @Input('tables') tables:TableProductModel[]| undefined;
+
+  @Input('customSchemas')
+  customSchemas!:CustomSchema[];
 
   @Output('updateRoutes') updateRoutes = new EventEmitter();
 
