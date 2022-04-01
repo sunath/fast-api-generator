@@ -1,9 +1,17 @@
+import { buildConditions } from './../api-condition-builder';
+import { ConvertableTable } from './../convert-table-product-model';
+import { AppDependModel, AppFunction } from './../../../depends/depend-model';
 import { ActiveSchema } from './../active-schema';
 import { TableProductModel } from 'src/app/data/table-product-model';
 import { PostEndpointFunction } from './../api-router-custom/api-custom-def';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { generateSchemasNames } from '../../api-schema-struc';
 import CustomSchema from 'src/app/api-schemas/custom-schema-model';
+import createDBDepend from '../../db-depend';
+import { FilterActions } from '../api-actions';
+import { convertTableProductModelsToSchemas } from '../convert-table-product-model';
+import { IApiFunctionStep } from '../depend_function_model';
+import { FilterCondition } from '../api-condition-builder';
 
 @Component({
   selector: 'app-api-post',
@@ -11,6 +19,10 @@ import CustomSchema from 'src/app/api-schemas/custom-schema-model';
   styleUrls: ['./api-post.component.css']
 })
 export class ApiPostComponent implements OnInit {
+
+
+  @Output('deleteOwnView') deleteOwnView = new EventEmitter<PostEndpointFunction>()
+
 
   @Input('apiClass')
   apiClass!: PostEndpointFunction;
@@ -20,6 +32,9 @@ export class ApiPostComponent implements OnInit {
 
   @Input('customSchemas')
   customSchemas!:CustomSchema[];
+
+  public dbModel:AppDependModel;
+  public filterActions:string[];
 
 
   public schemaList:string[]  = []
@@ -31,7 +46,32 @@ export class ApiPostComponent implements OnInit {
   public nextSchemaVariableName:string = ""
   public nextSchemaName:string = ""
 
-  constructor() { }
+
+  //DB Depend Props
+  public nextFunctionName:string = ""
+  public nextFunctionList:AppFunction[];
+  public nextQueryModelName:string = ""
+
+  public currentQueryModelName:string = ""
+
+
+
+  // Filter
+  public nextFilterColumnName:string = ""
+  public nextFilterAction:string = ""
+  public nextFilterSchemaColumn:string = ""
+
+
+
+  public postActions:IApiFunctionStep[] = []
+  public bigSteps:IApiFunctionStep[][] = []
+
+  constructor() { 
+    this.dbModel = createDBDepend('db');
+    this.nextFunctionList = this.dbModel.functions;
+    this.filterActions = FilterActions;
+    
+  }
 
   ngOnInit(): void {
     if(this.tablesProductModels.length >= 1){
@@ -44,19 +84,116 @@ export class ApiPostComponent implements OnInit {
   }
 
 
-  reset():void{
+
+  data_reset():void{
     this.nextSchemaName = ''
     this.nextSchemaVariableName = ''
+
   }
 
+
+
+  reset_filter_data(){
+    this.nextFilterColumnName = ''
+    this.nextFilterSchemaColumn = ''
+    this.nextFilterAction = ''
+  }
+
+
+  reset_all_db_function(){
+    this.nextFunctionList = this.dbModel.functions;
+  }
+
+
   addSchema():void{
-    this.schemaActiveList.push({variableName:this.nextSchemaVariableName,schemaName:this.nextSchemaName})
-    this.reset()
+    this.schemaActiveList.push({variableName:this.nextSchemaVariableName,schemaName:this.nextSchemaName,isCustomSchema:false})
+    this.data_reset()
     
   }
 
   deleteActiveSchema(e:ActiveSchema){
     this.schemaActiveList.splice(this.schemaActiveList.indexOf(e),1)
+  }
+
+
+  changeToNextFunction(){
+    this.nextFunctionList = this.nextFunctionList.filter(e => e.functionName == this.nextFunctionName)[0].functions;
+    this.nextFunctionName = ''
+    this.nextQueryModelName = ''
+  }
+
+
+
+  nextFunction(){
+
+    let shouldChange:Boolean = true;
+
+    switch(this.nextFunctionName){
+      case 'query':
+        this.currentQueryModelName = this.nextQueryModelName;
+        this.postActions.push({name:this.nextFunctionName,args:this.tablesProductModels.filter(e => e.tablename == this.currentQueryModelName)[0]})
+        break;
+      case 'filter':
+        const args:FilterCondition = {
+          action:this.nextFilterAction,
+          leftside:this.currentQueryModelName + this.nextFilterColumnName,
+          rightSide:this.nextFilterSchemaColumn
+        }
+        this.postActions.push({name:this.nextFunctionName,args:args})
+        this.reset_filter_data()
+        break;
+
+      case 'first' || 'all':
+        this.postActions.push({name:this.nextFunctionName})
+        this.bigSteps.push(this.postActions)
+        this.postActions = []
+        this.reset_all_db_function()
+        shouldChange = false;
+        //
+
+    }
+    if(shouldChange){
+    this.changeToNextFunction()
+    }
+  }
+
+
+  get currentModelProps(){
+    const product = this.tablesProductModels.filter(e => e.tablename == this.currentQueryModelName)[0]
+    return [...product.columns.map(e => e.name),...product.foreignKeys.map(e => e.column_name)]
+  }
+
+  get schemasProps(){
+
+      
+
+    const convertTables:ConvertableTable[] =  this.schemaActiveList.map(e => { 
+      
+      return {schemaName:e.schemaName,variableName:e.variableName,table:this.tablesProductModels.filter
+        (t => 
+          e.schemaName.includes(t.tablename))[0] 
+          ||
+          this.customSchemas.filter(x => e.schemaName.includes(x.targetModel))[0]
+      
+      }
+    
+    })
+
+  return convertTableProductModelsToSchemas(convertTables,this.customSchemas,this.tablesProductModels)
+  }
+
+
+
+  removeSelf(){
+    this.deleteOwnView.emit(this.apiClass)
+  }
+
+
+  logResult(){
+    console.log(this.postActions);
+    console.log(buildConditions(this.bigSteps))
+    
+    
   }
 
 }

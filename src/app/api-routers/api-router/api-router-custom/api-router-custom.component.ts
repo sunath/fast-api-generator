@@ -76,4 +76,12 @@ export class ApiRouterCustomComponent implements OnInit {
     }
   }
 
+
+  deletePostEndPoint(args:PostEndpointFunction){
+    const index = this.postEndpoints.indexOf(args)
+    if(index >= 0){
+      this.postEndpoints.splice(index,1)
+    }
+  }
+
 }

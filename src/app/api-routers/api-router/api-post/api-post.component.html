@@ -57,7 +57,86 @@
                 </div>
 
 
-                <div class="before-conditions-commit"></div>
+                <div class="before-conditions-commit">
+
+                    <h1 class="text-center">Post Endpoint Check Conditions Before create a instance</h1>
+                    <div class="condition">
+
+                        <form>
+
+                            <div class="form-field">
+
+                                <mat-form-field>
+                                    <mat-label>DB Method Type</mat-label>
+                                    <mat-select ngModel [(ngModel)]="nextFunctionName" name="{{apiClass.id+'-db-method-type-'}}">
+                                        <mat-option *ngFor="let f of nextFunctionList;" [value]="f.functionName">{{f.functionName}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-field" *ngIf="nextFunctionName == 'query'">
+
+                                <mat-form-field>
+                                    <mat-label>DB Method Type</mat-label>
+                                    <mat-select ngModel [(ngModel)]="nextQueryModelName" name="{{apiClass.id+'-db-query-table-'}}">
+                                        <mat-option *ngFor="let t of tablesProductModels;" [value]="t.tablename">{{t.tablename}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+
+
+                            <div class="filter" *ngIf="nextFunctionName == 'filter'">
+
+
+                                <div class="form-field" >
+
+                                    <mat-form-field>
+                                        <mat-label>DB Filter Column</mat-label>
+                                        <mat-select ngModel [(ngModel)]="nextFilterColumnName" name="{{apiClass.id+'-db-query-column-'}}">
+                                            <mat-option *ngFor="let p of currentModelProps;" [value]="p">{{p}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+    
+    
+                                </div>
+
+
+                                <div class="form-field">
+                                    <mat-form-field>
+                                        <mat-label>DB Filter Operator</mat-label>
+                                        <mat-select ngModel [(ngModel)]="nextFilterAction" name="{{apiClass.id+'-db-query-operator-'}}">
+                                            <mat-option *ngFor="let a of filterActions;" [value]="a">{{a}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                
+
+                                <div class="form-field">
+                                    <mat-form-field>
+                                        <mat-label>DB Compare Data</mat-label>
+                                        <mat-select ngModel [(ngModel)]="nextFilterSchemaColumn" name="{{apiClass.id+'-db-compare-schama-operator-'}}">
+                                            <mat-option *ngFor="let schemaName of schemasProps" [value]="schemaName">{{schemaName}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+
+    
+                            </div>
+
+
+                            
+
+                            <button mat-flat-button color="primary" (click)="nextFunction()">Next Function</button>
+
+                        </form>
+                    </div>
+                    <button mat-flat-button color="warn" (click)="removeSelf()">Delete Post View</button>
+
+
+                    <button (click)="logResult()">Print Result</button>
+                </div>
 
 
 

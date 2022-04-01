@@ -1,6 +1,6 @@
 import  {TableProductModel}  from 'src/app/data/table-product-model';
 import { GetEndpointFunction } from './../api-router-custom/api-custom-def';
-import { IApiGetFunctionStep } from './get_depend_func-model';
+import { IApiFunctionStep } from '../depend_function_model';
 
 
 export interface IApiGetQueryParam{
@@ -37,7 +37,7 @@ const extractQueryParms = (queryPrams:IApiGetQueryParam[]) => {
     return queryPrams.map((e,i) =>   `${e.name}: ${e.type} ${i < queryPrams.length -1 ? ',' : ''}` ).reduce((e,v) => e+v)
 }
 
-export const buildFullGetDefVersion = (currentBuildVersion:string,steps:IApiGetFunctionStep[],modelName:string,bigSteps?:IApiGetFunctionStep[][]) => {
+export const buildFullGetDefVersion = (currentBuildVersion:string,steps:IApiFunctionStep[],modelName:string,bigSteps?:IApiFunctionStep[][]) => {
     let newResult = currentBuildVersion;
     if (!bigSteps){
     return newResult+ `
@@ -53,7 +53,7 @@ export const buildFullGetDefVersion = (currentBuildVersion:string,steps:IApiGetF
 }
 
 
-const convertIntoPythonString =  (e:IApiGetFunctionStep,modelName?:string) => {
+const convertIntoPythonString =  (e:IApiFunctionStep,modelName?:string) => {
     switch(e.name){
         case 'query':
             const args:TableProductModel = e.args;

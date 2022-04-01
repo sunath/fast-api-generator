@@ -32,7 +32,7 @@
                         <ngb-accordion *ngFor="let endpoint of postEndpoints">
                             <ngb-panel [title]="endpoint.endpointName">
                                 <ng-template ngbPanelContent>
-                                    <app-api-post [apiClass]="endpoint" [customSchemas]="customSchemas" [tableProductModels]="models || []"></app-api-post>
+                                    <app-api-post [apiClass]="endpoint" [customSchemas]="customSchemas" [tableProductModels]="models || []" (deleteOwnView)="deletePostEndPoint($event)"></app-api-post>
                                 </ng-template>
                             </ngb-panel>
                         </ngb-accordion>

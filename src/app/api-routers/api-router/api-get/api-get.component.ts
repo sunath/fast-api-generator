@@ -6,7 +6,7 @@ import { GetEndpointFunction } from '../api-router-custom/api-custom-def';
 import createDBDepend from '../../db-depend';
 import { ColumnTypes } from 'src/app/data/col-types';
 import { FilterActions } from '../api-actions';
-import { IApiGetFunctionStep } from './get_depend_func-model';
+import { IApiFunctionStep } from '../depend_function_model';
 
 @Component({
   selector: 'app-api-get',
@@ -31,12 +31,12 @@ export class ApiGetComponent implements OnInit {
   public nextFilterLeft:string = ""
   public nextFilterRight:string = ""
   public nextFilterSign:string  = ""
-  public steps:IApiGetFunctionStep[] = []
+  public steps:IApiFunctionStep[] = []
 
   @Input('apiClass') apiClass!:GetEndpointFunction;
 
 
-  public bigStpes:IApiGetFunctionStep[][] = []
+  public bigStpes:IApiFunctionStep[][] = []
 
 
   @Output('deleteGetEndPointMethod') deleteGetEndPointMethod = new EventEmitter();
