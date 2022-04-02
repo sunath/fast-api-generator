@@ -12,6 +12,8 @@ import { FilterActions } from '../api-actions';
 import { convertTableProductModelsToSchemas } from '../convert-table-product-model';
 import { IApiFunctionStep } from '../depend_function_model';
 import { FilterCondition } from '../api-condition-builder';
+import { buildAPIFunction } from '../api-viewport-builder';
+import { createPostObjects, createReturnNewObject, IDbCreateObject } from './api-post-db-create-object';
 
 @Component({
   selector: 'app-api-post',
@@ -60,11 +62,27 @@ export class ApiPostComponent implements OnInit {
   public nextFilterColumnName:string = ""
   public nextFilterAction:string = ""
   public nextFilterSchemaColumn:string = ""
-
-
-
   public postActions:IApiFunctionStep[] = []
   public bigSteps:IApiFunctionStep[][] = []
+
+
+  public methodCode:string = ''
+  public conditionCode:string = '' 
+  public createObjectsCode:string = ''
+  public returnObjectCode:string = ''
+
+
+
+
+  //Creating Objects
+  public nextCreateObject:string = ''
+  public nextSchemaObject:string = ''
+  public nextObjectTempName:string = ''
+  public newObjects:IDbCreateObject[] = []
+
+
+  // Response
+  public returnModel:string = ''
 
   constructor() { 
     this.dbModel = createDBDepend('db');
@@ -136,7 +154,7 @@ export class ApiPostComponent implements OnInit {
       case 'filter':
         const args:FilterCondition = {
           action:this.nextFilterAction,
-          leftside:this.currentQueryModelName + this.nextFilterColumnName,
+          leftside:this.currentQueryModelName+"." + this.nextFilterColumnName,
           rightSide:this.nextFilterSchemaColumn
         }
         this.postActions.push({name:this.nextFunctionName,args:args})
@@ -189,11 +207,29 @@ export class ApiPostComponent implements OnInit {
   }
 
 
-  logResult(){
-    console.log(this.postActions);
-    console.log(buildConditions(this.bigSteps))
-    
-    
+  buildConditions(){
+    this.methodCode = buildAPIFunction("post",this.apiClass.endpointPathUrl,this.apiClass.endpointName,
+    this.schemaActiveList.map(e => {
+      return {type:`schemas.${e.schemaName}`,variableName:e.variableName}
+    }))
+
+    this.returnObjectCode =  createReturnNewObject(this.returnModel)
+
+    this.createObjectsCode = createPostObjects(this.newObjects)
+
+    this.conditionCode = buildConditions(this.bigSteps) 
+  }
+
+  get wholeCode(){
+    return this.methodCode + `  ${this.conditionCode}` + '\n' +  this.createObjectsCode
+  }
+
+
+  createNewObject(){
+    this.newObjects.push({schema:this.nextSchemaObject,target:this.nextCreateObject,tempName:this.nextObjectTempName})
+    this.nextCreateObject = ''
+    this.nextObjectTempName = ''
+    this.nextSchemaObject = ''
   }
 
 }

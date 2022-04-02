@@ -28,3 +28,7 @@
     justify-content: space-around;
     align-items: center;
 }
+
+button{
+    margin:1em;
+}

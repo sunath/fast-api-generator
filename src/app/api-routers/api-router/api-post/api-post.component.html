@@ -22,6 +22,13 @@
             </mat-form-field>
         </div>
 
+        <div class="form-model">
+            <mat-form-field>
+                <mat-label>Post Endpoint Path</mat-label>
+                <input matInput ngModel [(ngModel)]="apiClass.endpointPathUrl" name="{{apiClass.endpointName + apiClass.id + '-name-endpoint-path-url' + apiClass.endPointType}}">
+            </mat-form-field>
+        </div>
+
 
         <div class="schemas">
             <h3 class="text-primary text-center">Post Endpoint Schemas</h3>
@@ -49,7 +56,7 @@
                 <div class="preview-schemas">
                     <h1 class="text-center">Post Endpoint Active Schemas</h1>
                     <div class="preview-schema" *ngFor="let s of schemaActiveList">
-                        <h2 class="text-primary text-center">{{s.variableName}} : {{s.schemaName}}</h2>
+                        <h4 class="text-primary text-center">{{s.variableName}} : {{s.schemaName}}</h4>
                         <button mat-mini-fab (click)="deleteActiveSchema(s)">    
                             <mat-icon>delete</mat-icon>
                         </button>
@@ -59,7 +66,7 @@
 
                 <div class="before-conditions-commit">
 
-                    <h1 class="text-center">Post Endpoint Check Conditions Before create a instance</h1>
+                    <h3 class="text-center">Post Endpoint Check Conditions Before create a instance</h3>
                     <div class="condition">
 
                         <form>
@@ -133,9 +140,6 @@
                         </form>
                     </div>
                     <button mat-flat-button color="warn" (click)="removeSelf()">Delete Post View</button>
-
-
-                    <button (click)="logResult()">Print Result</button>
                 </div>
 
 
@@ -144,6 +148,63 @@
         </div>
 
 
+        <div class="created-objects">
+            <h3 class="text-center text-primary">Create a database Objects</h3>
+
+            <div class="form-field">
+                <mat-form-field>
+                    <mat-label>Post Create Model</mat-label>
+                    <mat-select  ngModel [(ngModel)]="nextCreateObject" name="{{apiClass.endpointName + apiClass.id + '-create-object' + apiClass.endPointType}}">
+                        <mat-option *ngFor="let target of tablesProductModels" [value]="target.tablename">{{target.tablename}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div class="form-field">
+                <mat-form-field>
+                    <mat-label>Schema</mat-label>
+                    <mat-select  ngModel [(ngModel)]="nextSchemaObject" name="{{apiClass.endpointName + apiClass.id + '-create-object-schema' + apiClass.endPointType}}">
+                        <mat-option *ngFor="let target of schemaActiveList" [value]="target.variableName">{{target.variableName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div class="form-model">
+                <mat-form-field>
+                    <mat-label>Object Temp Name</mat-label>
+                    <input matInput ngModel [(ngModel)]="nextObjectTempName" name="{{apiClass.endpointName + apiClass.id + '-name-endpoint-temp-name' + apiClass.endPointType}}">
+                </mat-form-field>
+            </div>
+    
+            <button mat-flat-button color="primary" (click)="createNewObject()">Add</button>
+
+        </div>
+
+
+        <div class="return-model">
+            <h4 class="text-center text-primary">Return Model</h4>
+
+            <div class="form-field">
+                <mat-form-field>
+                    <mat-label>Return  Model</mat-label>
+                    <mat-select  ngModel [(ngModel)]="returnModel" name="{{apiClass.endpointName + apiClass.id + '-name-endpoint-return-type' + apiClass.endPointType}}">
+                        <mat-option *ngFor="let o of newObjects" [value]="o.tempName">{{o.tempName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
     </form>
+
+
+    <div class="code-preview">
+        <pre>
+            <code [highlight]="wholeCode" [languages]="['python']"></code>
+        </pre>
+    </div>
+
+    <button (click)="buildConditions()" mat-flat-button color="primary">Build</button>
 
 </div>
