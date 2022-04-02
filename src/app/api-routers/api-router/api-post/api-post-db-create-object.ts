@@ -19,3 +19,10 @@ export const createReturnNewObject = (objectName:string) => {
     db.refresh(${objectName})
     return ${objectName}`
 }
+
+export const createReturnNewObjects = (objectNames:string[]) => {
+    return `
+${objectNames.map(e => "    db.refresh("+e+")\n")}
+    return {${objectNames.map((e,i) => `'${e}':${e} ${i == objectNames.length -1 ? '' : ', '}`)}}
+    `
+}

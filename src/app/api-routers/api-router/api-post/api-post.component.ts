@@ -13,7 +13,7 @@ import { convertTableProductModelsToSchemas } from '../convert-table-product-mod
 import { IApiFunctionStep } from '../depend_function_model';
 import { FilterCondition } from '../api-condition-builder';
 import { buildAPIFunction } from '../api-viewport-builder';
-import { createPostObjects, createReturnNewObject, IDbCreateObject } from './api-post-db-create-object';
+import { createPostObjects, createReturnNewObject, IDbCreateObject, createReturnNewObjects } from './api-post-db-create-object';
 
 @Component({
   selector: 'app-api-post',
@@ -79,6 +79,7 @@ export class ApiPostComponent implements OnInit {
   public nextSchemaObject:string = ''
   public nextObjectTempName:string = ''
   public newObjects:IDbCreateObject[] = []
+  public selectedReturnObjects:string[] = []
 
 
   // Response
@@ -207,13 +208,25 @@ export class ApiPostComponent implements OnInit {
   }
 
 
+
+  addReturnObject(){
+    this.selectedReturnObjects.push(this.returnModel)
+    this.returnModel = ''
+  }
+
+
+  get availableReturnObjects(){
+    return this.newObjects.filter(e => this.selectedReturnObjects.filter(x => x == e.tempName)[0] ? false : true)
+  }
+
+
   buildConditions(){
     this.methodCode = buildAPIFunction("post",this.apiClass.endpointPathUrl,this.apiClass.endpointName,
     this.schemaActiveList.map(e => {
       return {type:`schemas.${e.schemaName}`,variableName:e.variableName}
     }))
 
-    this.returnObjectCode =  createReturnNewObject(this.returnModel)
+    this.returnObjectCode =  this.selectedReturnObjects.length == 1 ?  createReturnNewObject(this.returnModel) : createReturnNewObjects(this.selectedReturnObjects)
 
     this.createObjectsCode = createPostObjects(this.newObjects)
 
@@ -221,7 +234,7 @@ export class ApiPostComponent implements OnInit {
   }
 
   get wholeCode(){
-    return this.methodCode + `  ${this.conditionCode}` + '\n' +  this.createObjectsCode
+    return this.methodCode + `  ${this.conditionCode}` + '\n' +  this.createObjectsCode + "\n" + this.returnObjectCode
   }
 
 

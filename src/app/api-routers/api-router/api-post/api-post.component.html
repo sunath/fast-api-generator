@@ -190,11 +190,18 @@
                 <mat-form-field>
                     <mat-label>Return  Model</mat-label>
                     <mat-select  ngModel [(ngModel)]="returnModel" name="{{apiClass.endpointName + apiClass.id + '-name-endpoint-return-type' + apiClass.endPointType}}">
-                        <mat-option *ngFor="let o of newObjects" [value]="o.tempName">{{o.tempName}}</mat-option>
+                        <mat-option *ngFor="let o of availableReturnObjects" [value]="o.tempName">{{o.tempName}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+
+            <button (click)="addReturnObject()" mat-flat-button color="primary">Add This to return </button>
         </div>
+
+
+
+
+
 
     </form>
 
