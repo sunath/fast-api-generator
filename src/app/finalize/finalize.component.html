@@ -54,7 +54,7 @@
                         <ngb-panel title="{{route.tablename.toLowerCase()}}_service.py">
                             <ng-template ngbPanelContent>
                                 <pre>
-                                    <code [highlight]="route.code" [languages]="['python']"></code>
+                                    <code [highlight]="route.code + getTableCode(route.tablename)" [languages]="['python']"></code>
                                 </pre>
                             </ng-template>
                         </ngb-panel>

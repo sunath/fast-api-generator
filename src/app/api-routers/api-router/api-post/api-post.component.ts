@@ -90,6 +90,12 @@ export class ApiPostComponent implements OnInit {
     this.nextFunctionList = this.dbModel.functions;
     this.filterActions = FilterActions;
     
+    
+  }
+
+
+  getWholeCode(){
+    return this.wholeCode;
   }
 
   ngOnInit(): void {
@@ -100,6 +106,7 @@ export class ApiPostComponent implements OnInit {
         this.schemaList = [...generateSchemasNames(this.tablesProductModels) ]
       }
       }
+      this.apiClass.getEndPointString = this.getWholeCode;
   }
 
 
@@ -226,11 +233,13 @@ export class ApiPostComponent implements OnInit {
       return {type:`schemas.${e.schemaName}`,variableName:e.variableName}
     }))
 
-    this.returnObjectCode =  this.selectedReturnObjects.length == 1 ?  createReturnNewObject(this.returnModel) : createReturnNewObjects(this.selectedReturnObjects)
+    this.returnObjectCode =  createReturnNewObjects(this.selectedReturnObjects)
 
     this.createObjectsCode = createPostObjects(this.newObjects)
 
     this.conditionCode = buildConditions(this.bigSteps) 
+
+    this.apiClass.endpointCode = this.wholeCode;
   }
 
   get wholeCode(){

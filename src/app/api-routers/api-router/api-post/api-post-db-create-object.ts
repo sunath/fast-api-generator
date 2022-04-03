@@ -6,11 +6,11 @@ export interface IDbCreateObject{
 
 
 export const createPostObjects = (objects:IDbCreateObject[]) => {
-    return objects.map(e => 
-`   ${e.tempName} = models.${e.target}(**${e.schema}.dict())
+    return objects.map(e => `    
+    ${e.tempName} = models.${e.target}(**${e.schema}.dict())
     db.add(${e.tempName})`
     ).reduce
-    ((p,n) => p + "\n" +n)  + " \n  db.commit()" 
+    ((p,n) => p + "\n" +n)  + " \n    db.commit()" 
 }
 
 
@@ -22,7 +22,7 @@ export const createReturnNewObject = (objectName:string) => {
 
 export const createReturnNewObjects = (objectNames:string[]) => {
     return `
-${objectNames.map(e => "    db.refresh("+e+")\n")}
+${objectNames.map(e => `    db.refresh(${e})`)}
     return {${objectNames.map((e,i) => `'${e}':${e} ${i == objectNames.length -1 ? '' : ', '}`)}}
     `
 }

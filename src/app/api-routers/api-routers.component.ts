@@ -5,6 +5,7 @@ import {TableProductModel} from '../data/table-product-model';
 
 import { generateService, TabelServiceCode } from './service-generator';
 import CustomSchema from '../api-schemas/custom-schema-model';
+import { PostEndpointFunction, GetEndpointFunction } from './api-router/api-router-custom/api-custom-def';
 
 @Component({
   selector: 'app-api-routers',
@@ -20,6 +21,11 @@ export class ApiRoutersComponent implements OnInit {
 
   @Output('updateRoutes') updateRoutes = new EventEmitter();
 
+
+
+
+  @Output('setPosts') setPosts = new EventEmitter<PostEndpointFunction[]>();
+  @Output('setGetEndpoints') setGetEndpoints = new EventEmitter<GetEndpointFunction[]>()
 
 
   
@@ -39,5 +45,12 @@ export class ApiRoutersComponent implements OnInit {
     this.code = generateService(this.tables)
     this.updateRoutes.emit({tablesRoutes:this.code})
   }
+
+
+
+  setCustomPosts(posts:PostEndpointFunction[]){
+    this.setPosts.emit(posts)
+  }
+
 
 }

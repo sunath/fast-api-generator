@@ -1,4 +1,7 @@
+import { GetEndpointFunction } from './../api-routers/api-router/api-router-custom/api-custom-def';
+import { CustomEndpointCode } from './../api-routers/api-router/custom-endpoint-code';
 import { Component, OnInit } from '@angular/core';
+import { PostEndpointFunction } from '../api-routers/api-router/api-router-custom/api-custom-def';
 import { TabelServiceCode } from '../api-routers/service-generator';
 import CustomSchema from '../api-schemas/custom-schema-model';
 import {TableProductModel} from '../data/table-product-model';
@@ -9,13 +12,7 @@ import { modelClassGeneratorWhole } from './model-class-generator';
   templateUrl: './database-models.component.html',
   styleUrls: ['./database-models.component.css']
 })
-export class DatabaseModelsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class DatabaseModelsComponent {
 
   customSchemas:CustomSchema[] = [];
 
@@ -25,6 +22,14 @@ export class DatabaseModelsComponent implements OnInit {
 
   schemaTextContent:string = ''
 
+
+
+  customPostEndpoints:PostEndpointFunction[] = []
+  customGetEndpoints:GetEndpointFunction[] = []
+
+
+  postEndpointsToFinalize:CustomEndpointCode[] = []
+  getEndpointsToFinalize:CustomEndpointCode[] = []
 
 
 
@@ -74,6 +79,28 @@ export class DatabaseModelsComponent implements OnInit {
     
   }
 
+
+  setPostEndpoints(posts:PostEndpointFunction[]){ 
+   this.customPostEndpoints = posts;
+   this.postEndpointsToFinalize = this.customPostEndpoints.map(e => {
+     return {code:e.endpointCode,targetModel:e.endpointTargetModel}
+   })
+  }
+
+
+  setGetEndpoints(getEndpoints:GetEndpointFunction[]){
+    this.customGetEndpoints = getEndpoints;
+    this.getEndpointsToFinalize = this.customGetEndpoints.map(e => {
+      return {code:e.endpointCode,targetModel:e.endpointTargetModel}
+    })
+    console.log(this.getEndpointsToFinalize);
+    
+  }
+
+
+  get customEndpointsData(){
+    return [...this.postEndpointsToFinalize,...this.getEndpointsToFinalize]
+  }
 
 
 

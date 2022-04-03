@@ -42,6 +42,7 @@ export class ApiGetComponent implements OnInit {
   @Output('deleteGetEndPointMethod') deleteGetEndPointMethod = new EventEmitter();
 
 
+
   constructor() { 
     this.dbDepend = createDBDepend('db');
     this.reset()
@@ -86,6 +87,7 @@ export class ApiGetComponent implements OnInit {
 
     this.code = generateGetFunction(this.queryPrams,this.apiClass)
     this.code = buildFullGetDefVersion(this.code,this.steps,this.targetModel?.tablename || 'Model(N)',this.bigStpes.length >= 1 ? this.bigStpes : undefined)
+    this.apiClass.endpointCode =  this.code;
 
   }
 

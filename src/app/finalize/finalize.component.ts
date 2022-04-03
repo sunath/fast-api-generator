@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { CustomEndpointCode } from '../api-routers/api-router/custom-endpoint-code';
 import { TabelServiceCode } from '../api-routers/service-generator';
 import {TableProductModel} from '../data/table-product-model';
 import { createMainFile } from './main-file.generator';
@@ -22,6 +23,9 @@ export class FinalizeComponent implements OnInit {
   @Input('schemasCode') schemasCode:string = ""
 
 
+  @Input('customEndpointCodes') customEndpointCodes:CustomEndpointCode[] = []
+
+
   mainFileContent:string = ""
 
 
@@ -38,7 +42,17 @@ export class FinalizeComponent implements OnInit {
 
 
   generate(){
-    
     this.mainFileContent = createMainFile(this.routes)
+  }
+
+
+   getTableCode(tablename:string){
+    const data = this.customEndpointCodes.filter(e => e.targetModel = tablename).map(e => e.code)
+
+    if(data.length >= 1){
+      return data.reduce((p,v) =>  "\n"+p+v+"\n")
+    }
+
+    return ''
   }
 }

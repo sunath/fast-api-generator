@@ -30,13 +30,15 @@
     </div>
 
     <div class="routers">
-        <app-api-routers [tables]="codeTables" [customSchemas]="customSchemas" (updateRoutes)="updateRouters($event)"></app-api-routers>
+        <app-api-routers [tables]="codeTables" [customSchemas]="customSchemas" (updateRoutes)="updateRouters($event)" (setPosts)="setPostEndpoints($event)" (setGetEndpoints)="setGetEndpoints($event)"></app-api-routers>
     </div>
     
 
     <div class="finalize">
-        <app-finalize [tables]="codeTables" [routes]="tablesRoutes" [modelsCode]="wholeCode" [schemasCode]="schemaTextContent"></app-finalize>
+        <app-finalize [tables]="codeTables" [routes]="tablesRoutes" [modelsCode]="wholeCode" [schemasCode]="schemaTextContent" [customEndpointCodes]="customEndpointsData"></app-finalize>
     </div>
     
 </div>
+
+
 

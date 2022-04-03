@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import IApiEndPointChooserDataModel from '../api-router-endpoint-chooser-data-model';
 import { ApiRouterEndpointChooserComponent } from '../api-router-endpoint-chooser/api-router-endpoint-chooser.component';
@@ -20,15 +20,16 @@ export class ApiRouterCustomComponent implements OnInit {
   @Input('customSchemas')
   customSchemas!:CustomSchema[];
 
+
+  @Output('setPosts') setPosts = new EventEmitter<PostEndpointFunction[]>();
+  @Output('setGetEndposts') setGetEndposts = new EventEmitter<GetEndpointFunction[]>();
+
   constructor(public dialog:MatDialog) { }
 
   getEndpoints:GetEndpointFunction[] = []
 
   postEndpoints:PostEndpointFunction[] = []
 
-  putEndpoints:string[] = []
-
-  deleteEndpoints:string[] = []
 
   ngOnInit(): void {
   }
@@ -36,7 +37,7 @@ export class ApiRouterCustomComponent implements OnInit {
 
   openSelectEndPointDialog(){
     const data:IApiEndPointChooserDataModel = {
-      types:["GET","POST","PUT","DELETE"],
+      types:["GET","POST"],
       defaultType:"GET"
     }
       const x = this.dialog.open(ApiRouterEndpointChooserComponent,{
@@ -57,9 +58,6 @@ export class ApiRouterCustomComponent implements OnInit {
       case "POST":
         this.postEndpoints.push(new PostEndpointFunction('unknwown'+this.getEndpoints.length+1,""))
         break
-      default:
-        console.log("Hehe");
-        
     }
   }
 
@@ -84,4 +82,10 @@ export class ApiRouterCustomComponent implements OnInit {
     }
   }
 
+
+
+  build(){
+    this.setPosts.emit(this.postEndpoints)
+    this.setGetEndposts.emit(this.getEndpoints)
+  }
 }

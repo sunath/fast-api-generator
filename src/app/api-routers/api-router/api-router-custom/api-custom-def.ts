@@ -8,6 +8,8 @@ abstract class ApiEndpoint {
 
 
     endpointPathUrl:string = "";
+
+    endpointCode:string = ""
     
 
     constructor(public endPointType:string,endpointName:string ,public endpointTargetModel:string,public id:number,public depends:string[] = []){

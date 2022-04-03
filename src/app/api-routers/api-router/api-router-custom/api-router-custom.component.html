@@ -40,32 +40,8 @@
                     </ngb-panel>
                 </ngb-accordion>
             </div>
-
-
-
-            <div class="put" *ngIf="checkVisibility(putEndpoints)">
-                <ngb-accordion>
-                    <ngb-panel>
-                        <ng-template ngbPanelContent>
-
-                        </ng-template>
-                    </ngb-panel>
-                </ngb-accordion>
-            </div>
-
-
-            <div class="delete" *ngIf="checkVisibility(deleteEndpoints)">
-                <ngb-accordion>
-                    <ngb-panel>
-                        <ng-template ngbPanelContent>
-
-                        </ng-template>
-                    </ngb-panel>
-                </ngb-accordion>
-            </div>
-
-
-
+            <br>
+            <button mat-flat-button color="primary" (click)="build()">Build</button>
             </ng-template>
         </ngb-panel>
     </ngb-accordion>
