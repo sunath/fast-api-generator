@@ -1,0 +1,34 @@
+
+
+
+.form-model{
+    width: 100%;
+}
+
+.form-model > mat-form-field{
+    width: 100%;
+}
+
+.form-model > mat-select {
+    width: 100%;
+}
+
+
+.schemas{
+    width: 90%;
+    margin: auto;
+}
+
+.preview-schema{
+    width: 70%;
+    margin: auto;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+button{
+    margin:1em;
+}

@@ -1,0 +1,50 @@
+
+<ngb-accordion>
+    <ngb-panel title="Custom EndPoints">
+        <ng-template ngbPanelContent>
+            <button mat-flat-button color="primary" (click)="openSelectEndPointDialog()">Add A End Point</button>
+
+            <div class="get" *ngIf="checkVisibility(getEndpoints)">
+
+                <ngb-accordion>
+                    <ngb-panel title="GET Endpoints">
+                        <ng-template ngbPanelContent>
+                            <ngb-accordion *ngFor="let getEndpointFunc of getEndpoints">
+                                <ngb-panel title="{{getEndpointFunc.endpointName}}">
+                                    <ng-template ngbPanelContent>
+                                       <app-api-get [apiClass]="getEndpointFunc" [models]="models" (deleteGetEndPointMethod)="deleteGetEndPoint($event)"></app-api-get>
+                                    </ng-template>
+                                </ngb-panel>
+                            </ngb-accordion>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+
+
+
+
+            </div>
+
+            <div class="post" *ngIf="checkVisibility(postEndpoints)">
+                <ngb-accordion>
+                    <ngb-panel title="POST ENDPOINTS">
+                        <ng-template ngbPanelContent>
+                        <ngb-accordion *ngFor="let endpoint of postEndpoints">
+                            <ngb-panel [title]="endpoint.endpointName">
+                                <ng-template ngbPanelContent>
+                                    <app-api-post [apiClass]="endpoint" [customSchemas]="customSchemas" [tableProductModels]="models || []" (deleteOwnView)="deletePostEndPoint($event)"></app-api-post>
+                                </ng-template>
+                            </ngb-panel>
+                        </ngb-accordion>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+            </div>
+            <br>
+            <button mat-flat-button color="primary" (click)="build()">Build</button>
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+
+
+    

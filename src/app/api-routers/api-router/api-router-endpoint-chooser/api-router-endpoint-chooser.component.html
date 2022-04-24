@@ -1,0 +1,9 @@
+<h2>Choose the endpoint type</h2>
+<mat-form-field>
+    <mat-label>Endpoint Type</mat-label>
+    <mat-select #select value="{{data.defaultType}}">
+        <mat-option *ngFor="let item of data.types" value="{{item}}">{{item}}</mat-option>
+    </mat-select>
+</mat-form-field>
+
+<button mat-button color="primary" (click)="close(select)">Select</button>

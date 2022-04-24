@@ -1,0 +1,10 @@
+.title{
+    text-align: center;
+    margin-top: 1em;
+}
+
+.generate{
+    display: grid;
+    place-items: center;
+    margin: auto;
+}

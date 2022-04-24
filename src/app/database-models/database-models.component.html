@@ -1,0 +1,44 @@
+
+<div class="content">
+
+
+    <div class="header">
+        <h1>API Models</h1>
+        <button mat-flat-button (click)="addNew()">Add new one</button>
+    </div>
+
+    <div class="tables">
+        <app-database-model *ngFor="let table of tables" [tableMetaData]="table" (tableRemoveAction)="remove($event)" (tableUpdateAction)="update($event)" [allTables]="codeTables" ></app-database-model>
+    </div>
+
+
+    <div class="preview" *ngIf="haveTables">
+        <ngb-accordion>
+            <ngb-panel [title]="'Preview of all tables '"> 
+                <ng-template ngbPanelContent>
+                   <pre>
+                       <code [highlight]="wholeCode" [languages]="['python']"></code>
+                   </pre>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+
+
+    <div class="schemas">
+        <app-api-schemas [tables]="codeTables" (receiveSchemaFile)="receiveDataFromSchema($event)" (customSchemaChange)="acceptCustomSchemas($event)"></app-api-schemas>
+    </div>
+
+    <div class="routers">
+        <app-api-routers [tables]="codeTables" [customSchemas]="customSchemas" (updateRoutes)="updateRouters($event)" (setPosts)="setPostEndpoints($event)" (setGetEndpoints)="setGetEndpoints($event)"></app-api-routers>
+    </div>
+    
+
+    <div class="finalize">
+        <app-finalize [tables]="codeTables" [routes]="tablesRoutes" [modelsCode]="wholeCode" [schemasCode]="schemaTextContent" [customEndpointCodes]="customEndpointsData"></app-finalize>
+    </div>
+    
+</div>
+
+
+

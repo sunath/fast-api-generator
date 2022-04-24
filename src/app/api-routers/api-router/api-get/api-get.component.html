@@ -1,0 +1,130 @@
+
+
+<div class="api-get-compo" *ngIf="apiClass">
+    <div class="row">
+        <h2 class="text-center text-primary">{{apiClass.endpointName}}</h2>
+        <div class="col-md-6">
+            <form>
+                <div class="form-field">
+                    <mat-form-field>
+                        <mat-label>Def Name</mat-label>
+                        <input matInput ngModel [(ngModel)]="apiClass.endpointName" name="{{apiClass.endpointName + apiClass.id}}" />
+                    </mat-form-field>
+                </div>
+
+                <div class="query">
+                            <div class="form-field">
+                                <mat-form-field>
+                                    <mat-label>Target Model</mat-label>
+                                    <mat-select ngModel [(ngModel)]="apiClass.endpointTargetModel" name="{{apiClass.endpointName + '-target-'+apiClass.id}}">
+                                        <mat-option *ngFor="let m of models" value="{{m.tablename}}">{{m.tablename}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-field" *ngIf="apiClass.endpointTargetModel">
+                                <mat-form-field>
+                                    <mat-label>Path</mat-label>
+                                    <input type="text" matInput ngModel [(ngModel)]="apiClass.endpointPathUrl" name="{{apiClass.endpointName + '-path-'+apiClass.id}}">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-field">
+                                <mat-form-field>
+                                    <mat-label>Query Pram Name</mat-label>
+                                    <input type="text" matInput ngModel [(ngModel)]="nextQueryPram" name="{{apiClass.endpointName + '-type'+apiClass.id}}">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-field">
+                               <mat-form-field>
+                                    <mat-label>Query Pram Type</mat-label>
+                                    <mat-select value="{{columsDTypes[0].dtype}}" ngModel [(ngModel)]="nextQueryPramType" name="{{apiClass.endpointName + apiClass.id + '-type'}}">
+                                        <mat-option *ngFor="let type of columsDTypes" [value]="type.dtype">{{type.dtype}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <button mat-flat-button color="primary" (click)="addNewPram()">Add Pram</button>
+                            <button mat-flat-button color="secondary" (click)="generateCode()">Generate View</button>
+                        </div>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+
+            <h2 class="text-primary text-center">Query Parms</h2>
+            <div class="query-pram" *ngFor="let p of queryPrams">
+                       <h3>{{p.name}} : <span class="bold-me">{{ p .type}}</span></h3> 
+
+                        <button mat-mini-fab (click)="deleteQuery(p.name)">    
+                            <mat-icon>delete</mat-icon>
+                        </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="code-preview">
+        <pre>
+            <code [highlight]="code"  [languages]="['python']"></code>
+        </pre>
+    </div>
+
+
+    <div class="conditions" *ngIf="currentFunctions.length >= 1">
+
+        <h2 class="text-center text-primary" >Add your own conditions with db</h2>
+
+            {{dbDepend.dependVariableName}}
+
+            <div class="form-field">
+                <mat-form-field>
+                    <mat-label>Select Method</mat-label>
+                    <mat-select  ngModel [(ngModel)]="nextFunctionListFrom" name="{{apiClass.id + '-db-funcs'}}">
+                        <mat-option *ngFor="let func of currentFunctions;" [value]="func.functionName">{{func.functionName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="form-field" *ngIf="nextFunctionListFrom == 'query' && models">
+                <mat-form-field>
+                    <mat-label>Select Model to query</mat-label>
+                    <mat-select ngModel [name]="apiClass.endpointName + '-targetMod-'+apiClass.id " [(ngModel)]="targetModelName">
+                        <mat-option *ngFor="let m of models" [value]="m.tablename">{{m.tablename}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="form-field" *ngIf="nextFunctionListFrom ==  'filter' ">
+                <mat-form-field>
+                    <mat-label>Compare With</mat-label>
+                    <mat-select  ngModel [(ngModel)]="nextFilterLeft" name="{{apiClass.id+'-name-compare-with-'+apiClass.endpointName}}">
+                        <mat-option *ngFor="let c of availableProps" [value]="c">{{c}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Compare Type</mat-label>
+                    <mat-select ngModel [(ngModel)]="nextFilterSign" name="{{apiClass.id+'-next-sign'+apiClass.endpointName}}"> 
+                        <mat-option *ngFor="let sign of compareTypes" [value]="sign">{{sign}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Compare to</mat-label>
+                    <mat-select ngModel [(ngModel)]="nextFilterRight" name="{{apiClass.id+'-name-compare-to'+apiClass.endpointName}}">
+                        <mat-option *ngFor="let v of compareWith" [value]="v"> {{v.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+
+            <button mat-flat-button color="primary" (click)="nextFunctions(nextFunctionListFrom)">Next</button>
+            <button mat-flat-button color="secondary" (click)="printSteps()">LogData </button>
+            <button mat-flat-button color="warn" (click)="removeSelf()">Delete View</button>
+
+            <button mat-flat-button color="primary" (click)="logBigSteps()">log second Data</button>
+    </div>
+
+</div>

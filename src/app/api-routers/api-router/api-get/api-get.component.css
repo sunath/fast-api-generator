@@ -1,0 +1,17 @@
+.query-pram{
+    padding:.5em;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    vertical-align: center;
+}
+
+.query-pram h3{
+    width: 60%;
+}
+
+
+.bold-me{
+    font-weight: bold;
+}

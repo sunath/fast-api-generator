@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fast-api-genertor": {
+      "hosting": {
+        "api-generator": [
+          "fast-api-genertor"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fast-api-genertor"
+  }
+}

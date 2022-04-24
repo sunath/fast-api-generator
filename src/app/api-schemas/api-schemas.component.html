@@ -1,0 +1,67 @@
+<div class="content">
+    
+
+
+    <h1 class="title">API Schema</h1>
+
+    <button class="title generate-button" mat-flat-button (click)="generate()">Generate Schemas</button>
+
+
+
+    <ngb-accordion *ngIf="code">
+        <ngb-panel title="Schemas">
+            <ng-template ngbPanelContent>
+                <pre>
+                    <code [highlight]="code" [languages]="['python']"></code>
+                </pre>
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+
+    <ngb-accordion >
+        <ngb-panel title="Custom Schemas">
+            <ng-template ngbPanelContent>
+                <ngb-accordion *ngFor="let customSchema of customSchemas;let i = index;">
+                    <ngb-panel [title]="customSchema.schemaName + ' > ' + customSchema.targetModel ">
+                        <ng-template ngbPanelContent>
+                            <div class="row">
+                                <form class="col-md-6">
+                                    <div class="form-field">
+                                        <mat-form-field>
+                                            <mat-label>Schema Name</mat-label>
+                                            <input type="text" matInput ngModel [(ngModel)]="customSchema.schemaName" name="{{'SchemaName-' +customSchema.schemaName+i}}">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="form-field">
+                                        <mat-form-field>
+                                            <mat-select ngModel [(ngModel)]="customSchema.targetModel" name="{{ 'targetTo-' + customSchema.schemaName+i}}" (selectionChange)="changeData($event)">
+                                                <mat-option *ngFor="let table of availableTables;" value="{{table}}" >{{table}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="schema-props">
+                                        <mat-form-field>
+                                            <mat-label>Select Property</mat-label>
+                                            <mat-select #propState>
+                                                <mat-option *ngFor="let field of getSchemaAvailableProperties(customSchema.id)" value="{{field}}">{{field}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <button mat-flat-button (click)="addPropToTheSchema(customSchema.id,propState)">Add New Property</button>
+                                        <button mat-flat-button color="warn" (click)="removeCustomSchema(customSchema.id)">Remove</button>
+                                    </div>
+                                </form>
+                                <div class="col-md-6">
+                                   <app-custom-schema-result [fields]="customSchema.fields"></app-custom-schema-result>
+                                </div>
+                            </div>
+                            <button mat-flat-button color="primary" (click)="updateCustomSchema()">Update Schema</button>
+                        </ng-template>
+                    </ngb-panel>
+                </ngb-accordion>
+                <button mat-flat-button (click)="createNewCustomSchema()">Create New Schema</button>
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+
+
+</div>

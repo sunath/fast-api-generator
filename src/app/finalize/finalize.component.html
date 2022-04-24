@@ -1,0 +1,89 @@
+
+<h1 class="title">API Routers</h1>
+<button mat-flat-button class="generate" (click)="generate()">Generate Whole Project</button>
+
+
+
+<div class="files">
+
+
+    <div class="file">
+
+        <ngb-accordion *ngIf="mainFileContent">
+            <ngb-panel title="main.py">
+                <ng-template ngbPanelContent>
+                    <pre class="file_text_content">
+                        <code [highlight]="mainFileContent" [languages]="['python']">
+                           
+                        </code>
+
+                        <button mat-mini-fab color="" aria-label="Example icon button with a filter list icon" class="file_text_copy" [cdkCopyToClipboard]="mainFileContent">
+                            <mat-icon>content_copy</mat-icon>
+                          </button>
+                        
+                    </pre>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+        <ngb-accordion *ngIf="dbFileContent">
+            <ngb-panel title="database.py">
+                <ng-template ngbPanelContent>
+                    <pre class="file_text_content">
+                        <code [highlight]="dbFileContent" [languages]="['python']"></code>
+                        <button mat-mini-fab color="" aria-label="Example icon button with a filter list icon" class="file_text_copy" [cdkCopyToClipboard]="dbFileContent">
+                            <mat-icon>content_copy</mat-icon>
+                          </button>
+                    </pre>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+        <ngb-accordion *ngIf="modelsCode">
+            <ngb-panel title="models.py">
+                <ng-template ngbPanelContent>
+                    <pre class="file_text_content">
+                        <code [highlight]="modelsCode" [languages]="['python']"></code>
+                        <button mat-mini-fab color="" aria-label="Example icon button with a filter list icon" class="file_text_copy" [cdkCopyToClipboard]="modelsCode">
+                            <mat-icon>content_copy</mat-icon>
+                          </button>
+                    </pre>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+        <ngb-accordion *ngIf="schemasCode">
+            <ngb-panel title="schemas.py">
+                <ng-template ngbPanelContent>
+                    <pre class="file_text_content">
+                        <code [highlight]="schemasCode" [languages]="['python']"></code>
+                        <button mat-mini-fab color="" aria-label="Example icon button with a filter list icon" class="file_text_copy" [cdkCopyToClipboard]="schemasCode">
+                            <mat-icon>content_copy</mat-icon>
+                          </button>
+                    </pre>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+        <ngb-accordion *ngIf="routes.length >=1">
+            <ngb-panel title="Routes">
+                <ng-template ngbPanelContent>
+                    <ngb-accordion *ngFor="let route of routes">
+                        <ngb-panel title="{{route.tablename.toLowerCase()}}_service.py">
+                            <ng-template ngbPanelContent>
+                                <pre class="file_text_content">
+                                    <code [highlight]="route.code + getTableCode(route.tablename)" [languages]="['python']"></code>
+                                    <button mat-mini-fab color="" aria-label="Example icon button with a filter list icon" class="file_text_copy" [cdkCopyToClipboard]="route.code">
+                                        <mat-icon>content_copy</mat-icon>
+                                      </button>
+                                </pre>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+
+
+    </div>
+</div>

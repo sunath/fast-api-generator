@@ -1,0 +1,13 @@
+
+
+
+
+
+
+<div class="row">
+    <h4 class="text-center text-primary">Schema Props</h4>
+    <div class="prop" *ngFor="let f of fields">
+        <h1>{{f}}</h1>
+        <button mat-mini-fab color="warn" (click)="removeFromList(f)"><mat-icon>delete</mat-icon></button>
+    </div>
+</div>

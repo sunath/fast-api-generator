@@ -1,0 +1,24 @@
+
+<h1 class="title">API Routers</h1>
+<button mat-flat-button class="generate" (click)="generate()">Generate API Routers</button>
+
+
+
+<ngb-accordion *ngIf="code">
+    <ngb-panel title="Services">
+        <ng-template ngbPanelContent>
+            <ngb-accordion *ngFor="let table of code;">
+                <ngb-panel [title]="table.tablename">
+                    <ng-template ngbPanelContent>
+                        <pre>
+                            <code [highlight]="table.code" [languages]="['python']"></code>
+                        </pre>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
+        </ng-template>
+    </ngb-panel>
+</ngb-accordion>
+
+
+<app-api-router-custom [models]="tables" [customSchemas]="customSchemas" (setPosts)="setCustomPosts($event)" (setGetEndposts)="setGetEndpoints.emit($event)"></app-api-router-custom>

@@ -1,0 +1,11 @@
+
+
+.prop{
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+    margin: auto;
+    height: 2em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}

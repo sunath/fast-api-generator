@@ -1,0 +1,34 @@
+<div class="header">
+    <nav class="navbar" >
+        <div class="logo">
+            <h2>API-GEN</h2>
+        </div>
+
+
+        <div class="main-navs" [ngClass]="{'main-navs-show':isNavbarToggled,'main-navs-desktop-show':!isToggledButtonShow}">
+            <div class="nav-center nav-list-renderer navs"  >
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#" >Home</a></li>
+                    <li class="nav-item"><a href="#">About</a></li>
+                    <li class="nav-item"><a href="#">Services</a></li>
+                </ul>
+            </div>
+    
+            <div class="nav-end nav-list-renderer navs">
+                <div class="nav-list">
+                    <li class="nav-item"><a href="#" >Contact Us</a></li>
+                    <li class="nav-item"><a href="#" >More Projects</a></li>
+                </div>
+            </div>
+    
+        </div>
+
+     
+        <div class="nav-collaspe" [ngClass]="{'nav-collaspe-top':isNavbarToggled}" *ngIf="isToggledButtonShow">
+            <button mat-icon-button  color="primary" aria-label="Example icon button with a menu icon" (click)="toggleNavItems()">
+                <mat-icon>menu</mat-icon>
+              </button>
+        </div>
+
+    </nav>
+</div>
