@@ -34,7 +34,8 @@ import { ApiGetComponent } from './api-routers/api-router/api-get/api-get.compon
 import { ApiPostComponent } from './api-routers/api-router/api-post/api-post.component';
 import { ApiPutComponent } from './api-routers/api-router/api-put/api-put.component';
 import { ApiDeleteComponent } from './api-routers/api-router/api-delete/api-delete.component';
-
+import { RouterModule } from '@angular/router';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -72,9 +73,35 @@ import { ApiDeleteComponent } from './api-routers/api-router/api-delete/api-dele
     ReactiveFormsModule,
     CdkAccordionModule,
     FormsModule,
+    MatTooltipModule,
     
     StoreModule.forRoot({dbConfig:dbConfigReducer}),
-    HighlightModule
+    HighlightModule,
+
+    RouterModule.forRoot([
+        {
+          path:"models",
+          component:DatabaseModelsComponent
+        },
+
+        {
+          path:"schemas",
+          component:ApiSchemasComponent
+        },
+        {
+          path:"routers",
+          component:ApiRoutersComponent
+        },
+        {
+          path:"build",
+          component:FinalizeComponent
+        },
+        {
+        path:"",
+        component:DatabaseConfigComponent
+        }
+  ]
+  )
   ],
   providers: [
     {

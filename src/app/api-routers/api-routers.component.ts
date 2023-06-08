@@ -6,6 +6,7 @@ import {TableProductModel} from '../data/table-product-model';
 import { generateService, TabelServiceCode } from './service-generator';
 import CustomSchema from '../api-schemas/custom-schema-model';
 import { PostEndpointFunction, GetEndpointFunction } from './api-router/api-router-custom/api-custom-def';
+import { DataService } from '../services/data-service';
 
 @Component({
   selector: 'app-api-routers',
@@ -14,10 +15,9 @@ import { PostEndpointFunction, GetEndpointFunction } from './api-router/api-rout
 })
 export class ApiRoutersComponent implements OnInit {
 
-  @Input('tables') tables:TableProductModel[]| undefined;
+  tables:TableProductModel[]| undefined;
 
-  @Input('customSchemas')
-  customSchemas!:CustomSchema[];
+  customSchemas:CustomSchema[] = [];
 
   @Output('updateRoutes') updateRoutes = new EventEmitter();
 
@@ -32,7 +32,9 @@ export class ApiRoutersComponent implements OnInit {
 
   code:TabelServiceCode[] = []
 
-  constructor() { 
+  constructor(public dataService:DataService) { 
+    this.tables  = dataService.tables
+    this.customSchemas = dataService.customSchemas
   }
 
   ngOnInit(): void {

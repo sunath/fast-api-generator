@@ -42,7 +42,7 @@ const mapForeignKeysToDatabase =  (keys:DatabaseForeginKey[],tabs:number=1) => {
 export function modelClassGeneratorWhole(tables:any[]){
 
 
-    console.log(tables,"test for 2");
+    // console.log(tables,"test for 2");
     
     
 
@@ -58,11 +58,11 @@ from database import Base
     
     id = Column(Integer, primary_key=True, index=True)\n`
 
-        console.log(table);
+        // console.log(table);
         
 
         for(let column of table.columns){
-            console.log(column);
+            // console.log(column);
             
             const data:DatabaseColumn = column;
             const modify = {...column,isNullable:column.isNullable ? 'True' : 'False',isUnqiue:column.isUnqiue ? 'True' : 'False'};

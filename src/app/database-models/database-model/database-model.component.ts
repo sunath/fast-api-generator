@@ -1,17 +1,28 @@
-import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output,EventEmitter, ViewChild, Directive, ElementRef, AfterContentInit, AfterViewInit } from '@angular/core';
 import { ColumnTypes } from 'src/app/data/col-types';
 import {TableProductModel} from 'src/app/data/table-product-model';
 import { DatabaseColumn, DatabaseForeginKey } from '../database-col-meta';
 import { modelClassGenerator } from '../model-class-generator';
+import { DataService } from 'src/app/services/data-service';
+
+
+@Directive({selector:"ngb-accordion"})
+export class DatabaseModelClass{
+
+}
 
 @Component({
   selector: 'app-database-model',
   templateUrl: './database-model.component.html',
   styleUrls: ['./database-model.component.css']
 })
-export class DatabaseModelComponent implements OnInit {
+export class DatabaseModelComponent implements OnInit,AfterViewInit {
 
   @Input('tableMetaData') tableMetaData:any;
+  @Input('tableIndex') tableIndex:any;
+
+
+  @ViewChild('KeyListener') element:ElementRef | undefined;
 
 
   @Input('allTables') allTables:any[] = [];
@@ -31,10 +42,24 @@ export class DatabaseModelComponent implements OnInit {
 
   dtypes = ColumnTypes;
  
-  constructor() { }
+  constructor(public dataService:DataService) { 
+
+  }
 
 
   ngOnInit(): void {
+    console.log(this.dataService.tables[this.tableIndex])
+    this.cols = this.dataService.tables[this.tableIndex].columns || []
+    this.tableName = this.dataService.tables[this.tableIndex].tablename
+
+
+  }
+
+
+
+  ngAfterViewInit() {
+    // @ts-ignore
+    // console.log(this.element?.nativeElement.addEventListener('keydown',(e) => {console.log(e)}))
   }
 
   removeSelf(){
@@ -43,6 +68,7 @@ export class DatabaseModelComponent implements OnInit {
 
   addColumn(){
     this.cols.push({id:new Date().getTime(),dtype:'String',isNullable:false,isUnique:true,name:''})
+    this.dataService.tables[this.tableIndex].columns = this.cols
   }
 
   addForeignKey(){
@@ -67,6 +93,7 @@ export class DatabaseModelComponent implements OnInit {
     const index = this.cols.indexOf(colData)
     this.cols.splice(index,1)
   }
+
   tableName:string = ""
 
 
@@ -77,6 +104,7 @@ export class DatabaseModelComponent implements OnInit {
   generate(){
     this.code = modelClassGenerator(this.cols,this.tableName,this.foreignKeys)
     this.tableUpdateAction.emit({...this.tableMetaData,columns:this.cols,tablename:this.tableName,foreignKeys:this.foreignKeys})
+    this.dataService.tables[this.tableIndex] = {...this.tableMetaData,columns:this.cols,tablename:this.tableName,foreignKeys:this.foreignKeys}
   }
 
   get availableTablesForTable(){    
@@ -85,6 +113,11 @@ export class DatabaseModelComponent implements OnInit {
 
   checkAlreadyExistAForeignKey(name:string){
     return this.foreignKeys.filter(e => e.table_name !== name)[0] ? true : false
+  }
+
+
+  setName(event:any){
+    console.log(event)
   }
 
 

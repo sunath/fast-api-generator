@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { DatabaseTypes, DbTypeMetaData } from '../data/db-list';
 import { DatabaseConfiguraion, database_setup_action, database_update_file } from './db-config.actions';
 import { createDatabaseCode } from './db_file_generator';
+import { DataService } from '../services/data-service';
 
 @Component({
   selector: 'app-database-config',
@@ -22,15 +23,39 @@ export class DatabaseConfigComponent  implements OnInit{
   databaseConfigForm:FormGroup;
 
 
-  constructor(fb:FormBuilder,private store:Store<{dbConfig:DatabaseConfiguraion}>) { 
-    this.databaseConfigForm = fb.group({
-      project_name:['',[Validators.required]],
-      db_name:['',[Validators.required]],
-      db_type:[this.db_list[0].dbName,[Validators.required]],
-      db_server_url:['',[Validators.required]],
-      db_username:['',[Validators.required]],
-      db_password:['',[Validators.required]]
-    })
+  constructor(fb:FormBuilder,
+    private store:Store<{dbConfig:DatabaseConfiguraion}>,
+    private dataService:DataService) { 
+
+      if(dataService.config){
+        const config = dataService.config;
+
+        this.databaseConfigForm = fb.group({
+          project_name:[config.project_name,[Validators.required]],
+          db_name:[config.db_name,[Validators.required]],
+          db_type:[config.db_type,[Validators.required]],
+          db_server_url:['',[Validators.required]],
+          db_username:['',[Validators.required]],
+          db_password:['',[Validators.required]]
+        })
+
+        this.previewCode = config.file_text
+        
+      }else{    
+        
+        
+        this.databaseConfigForm = fb.group({
+        project_name:['',[Validators.required]],
+        db_name:['',[Validators.required]],
+        db_type:[this.db_list[0].dbName,[Validators.required]],
+        db_server_url:['',[Validators.required]],
+        db_username:['',[Validators.required]],
+        db_password:['',[Validators.required]]
+      })
+
+      }
+
+
 
     
   }
@@ -63,7 +88,7 @@ export class DatabaseConfigComponent  implements OnInit{
   next(){
     const newData:DatabaseConfiguraion = {isSetup:true,...this.databaseConfigForm.value,file_text:this.previewCode}
     this.store.dispatch(database_setup_action({details:newData}))
-
+    this.dataService.setConfig(newData)
   }
 
 

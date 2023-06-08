@@ -1,8 +1,6 @@
 
 
 .content{
-    position: absolute;
-    top: 100%;
     width: 100%;
     height: 100%;
     z-index: 11;
@@ -11,4 +9,9 @@
 .header{
     text-align: center;
     padding: 2em;
+}
+
+
+.database-model{
+    margin: 2em;
 }

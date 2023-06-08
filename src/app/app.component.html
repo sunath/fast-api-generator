@@ -1,19 +1,46 @@
 
 
-<div class="newContent">
-    <app-header></app-header>
-    <app-hero></app-hero>
-</div>
+<!-- 
+<app-header></app-header>
+<app-hero></app-hero>
 
 
 <app-database-config></app-database-config>
+<app-database-models></app-database-models>
+ -->
 
 
 
+ <div id="layout">
 
-<div class="newContent">
-    <app-database-models></app-database-models>
-</div>
+    <!-- <div class="header">
+        <h1>FASTAPI - GEN</h1>
+    </div> -->
+
+    <div class="workflow">
+        
+        <div class="navbar">
+                <ul>
+
+                    <li>
+                        <button mat-icon-button color="accent" matTooltip="Configuration" routerLink="/" >
+                            <mat-icon>handyman</mat-icon>
+                        </button>
+                </li>
+
+                    <li>
+                        <button mat-icon-button color="accent" routerLink="/models" matTooltip="Database" ><mat-icon>table_chart</mat-icon></button>
+                    </li>
+
+                    <li><button mat-icon-button color="accent"routerLink="/schemas" matTooltip="Schemas"><mat-icon>schema</mat-icon></button></li>
+                    <li><button mat-icon-button color="accent" routerLink="/routers" matTooltip="Routers"><mat-icon>fork_right</mat-icon></button></li>
+                    <li><button mat-icon-button color="accent" routerLink="/build" matTooltip="Final Product"><mat-icon>build</mat-icon></button></li>
+                </ul>    
+        </div>
 
 
+        <div class="work-panel"><router-outlet></router-outlet></div>
 
+    </div>
+
+ </div>

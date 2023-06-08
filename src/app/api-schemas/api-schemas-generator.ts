@@ -30,10 +30,13 @@ from datetime import datetime
 
     }
 
+    data += `
+    pass\n`
+
 
     for (let table of details){
         let model = `class ${table.tablename}In(${table.tablename}Base):
-        pass
+    pass
 `
 
         data += model;

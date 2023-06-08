@@ -8,7 +8,7 @@
 
 
 
-    <ngb-accordion *ngIf="code">
+    <!-- <ngb-accordion *ngIf="code">
         <ngb-panel title="Schemas">
             <ng-template ngbPanelContent>
                 <pre>
@@ -16,16 +16,16 @@
                 </pre>
             </ng-template>
         </ngb-panel>
-    </ngb-accordion>
+    </ngb-accordion> -->
 
     <ngb-accordion >
         <ngb-panel title="Custom Schemas">
             <ng-template ngbPanelContent>
-                <ngb-accordion *ngFor="let customSchema of customSchemas;let i = index;">
+                <ngb-accordion *ngFor="let customSchema of dataService.customSchemas;let i = index;">
                     <ngb-panel [title]="customSchema.schemaName + ' > ' + customSchema.targetModel ">
                         <ng-template ngbPanelContent>
                             <div class="row">
-                                <form class="col-md-6">
+                                <form>
                                     <div class="form-field">
                                         <mat-form-field>
                                             <mat-label>Schema Name</mat-label>
@@ -34,11 +34,16 @@
                                     </div>
                                     <div class="form-field">
                                         <mat-form-field>
-                                            <mat-select ngModel [(ngModel)]="customSchema.targetModel" name="{{ 'targetTo-' + customSchema.schemaName+i}}" (selectionChange)="changeData($event)">
+                                            <mat-select ngModel [(ngModel)]="customSchema.targetModel" placeholder="Select Your Model" name="{{ 'targetTo-' + customSchema.schemaName+i}}" (selectionChange)="changeData($event)">
                                                 <mat-option *ngFor="let table of availableTables;" value="{{table}}" >{{table}}</mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
+
+
+                                    <h3 style="text-align: center;margin-top: 2rem;">Add Properties to your schema</h3>
+
+
                                     <div class="schema-props">
                                         <mat-form-field>
                                             <mat-label>Select Property</mat-label>
@@ -46,15 +51,30 @@
                                                 <mat-option *ngFor="let field of getSchemaAvailableProperties(customSchema.id)" value="{{field}}">{{field}}</mat-option>
                                             </mat-select>
                                         </mat-form-field>
-                                        <button mat-flat-button (click)="addPropToTheSchema(customSchema.id,propState)">Add New Property</button>
-                                        <button mat-flat-button color="warn" (click)="removeCustomSchema(customSchema.id)">Remove</button>
+
+                                        <div class="action-buttons">
+
+                                            <button mat-flat-button color="primary" (click)="updateCustomSchema()">Update Schema</button>
+                                            <button mat-flat-button (click)="addPropToTheSchema(customSchema.id,propState)">Add New Property</button>
+                                            <button mat-flat-button color="warn" (click)="removeCustomSchema(customSchema.id)">Remove</button>
+            
+                                        </div>
+                                        
                                     </div>
                                 </form>
-                                <div class="col-md-6">
+
+                                <div>
                                    <app-custom-schema-result [fields]="customSchema.fields"></app-custom-schema-result>
                                 </div>
+
+                            
                             </div>
-                            <button mat-flat-button color="primary" (click)="updateCustomSchema()">Update Schema</button>
+
+
+                
+
+
+
                         </ng-template>
                     </ngb-panel>
                 </ngb-accordion>
@@ -65,3 +85,5 @@
 
 
 </div>
+
+

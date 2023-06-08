@@ -8,3 +8,8 @@
     place-items: center;
     margin: auto;
 }
+
+
+ngb-accordion {
+    margin: 2rem;
+}

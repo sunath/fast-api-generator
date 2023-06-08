@@ -8,7 +8,7 @@
     </div>
 
     <div class="tables">
-        <app-database-model *ngFor="let table of tables" [tableMetaData]="table" (tableRemoveAction)="remove($event)" (tableUpdateAction)="update($event)" [allTables]="codeTables" ></app-database-model>
+        <app-database-model *ngFor="let table of dataService.tables; let i = index"  [tableIndex]='i' [tableMetaData]="table" (tableRemoveAction)="remove($event)" (tableUpdateAction)="update($event)" [allTables]="dataService.tables" class="database-model"></app-database-model>
     </div>
 
 
@@ -25,7 +25,8 @@
     </div>
 
 
-    <div class="schemas">
+
+    <!-- <div class="schemas">
         <app-api-schemas [tables]="codeTables" (receiveSchemaFile)="receiveDataFromSchema($event)" (customSchemaChange)="acceptCustomSchemas($event)"></app-api-schemas>
     </div>
 
@@ -36,7 +37,7 @@
 
     <div class="finalize">
         <app-finalize [tables]="codeTables" [routes]="tablesRoutes" [modelsCode]="wholeCode" [schemasCode]="schemaTextContent" [customEndpointCodes]="customEndpointsData"></app-finalize>
-    </div>
+    </div> -->
     
 </div>
 

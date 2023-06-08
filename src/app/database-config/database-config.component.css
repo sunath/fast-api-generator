@@ -10,17 +10,6 @@ h1{
     width: 100%;
 }
 
-#databaseConfig{
-    position: absolute;
-    height: 100vh;
-    margin: auto;
-    top: 100%;
-    width:100%;
-    background-color: rgb(255, 245, 240);
-    display: grid;
-    place-items: center;
-    z-index: 20;
-}
 
 .db-form{
     width:80%;

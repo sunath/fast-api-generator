@@ -6,6 +6,7 @@ import { TabelServiceCode } from '../api-routers/service-generator';
 import CustomSchema from '../api-schemas/custom-schema-model';
 import {TableProductModel} from '../data/table-product-model';
 import { modelClassGeneratorWhole } from './model-class-generator';
+import { DataService } from '../services/data-service';
 
 @Component({
   selector: 'app-database-models',
@@ -13,6 +14,12 @@ import { modelClassGeneratorWhole } from './model-class-generator';
   styleUrls: ['./database-models.component.css']
 })
 export class DatabaseModelsComponent {
+
+
+  constructor(public dataService:DataService){
+    this.codeTables = dataService.tables || []
+    this.tables = dataService.tables || []
+  }
 
   customSchemas:CustomSchema[] = [];
 
@@ -39,16 +46,23 @@ export class DatabaseModelsComponent {
 
   addNew(){
     const id  = new Date().getTime()
-    this.tables.push({id:id})
-    this.codeTables.push({id:id})
+    // this.tables.push({id:id})
+    // this.codeTables.push({id:id})
+    if(!this.dataService.tables){
+      this.dataService.tables = []
+    }
+    this.dataService.tables.push({id:id})
   }
 
   update(data:TableProductModel){
+    console.log(data)
     const pos = this.codeTables.indexOf((this.codeTables.filter(e => e.id === data.id)[0]))
-    this.codeTables[pos] = data;
+    this.dataService.tables[pos] = data;
+    // this.codeTables[pos] = data;
     this.wholeCode = modelClassGeneratorWhole(this.codeTables)
     
-    
+    // console.table(data)
+    // console.table(this.dataService.tables[pos])
   }
 
   updateRouters(data:{tablesRoutes:TabelServiceCode[]}){
@@ -58,8 +72,9 @@ export class DatabaseModelsComponent {
   remove(data:{id:any}){
     const pos = this.tables.indexOf(data)
     console.log("remove",pos);
-    this.codeTables.splice(pos,1)
-    this.tables.splice(pos,1)
+    // this.codeTables.splice(pos,1)
+    // this.tables.splice(pos,1)
+    this.dataService.tables.splice(pos,1)
   }
 
   get haveTables(){

@@ -13,7 +13,36 @@
 }
 
 
+.form-model,.columns{
+    max-width: 500px;
+    min-width: 400px;
+    width: 100%;
+    margin: auto;
+}
+
+.form-field{
+    width: 100%;
+}
+
 .title{
     text-align: center;
     padding: 2em;
+}
+
+
+
+.table-actions{
+    margin-top: 3rem;
+}
+
+.foreign-keys{
+    margin-top: 2rem;
+}
+
+.table-column{
+    margin: 2rem;
+}
+
+.table-actions button{
+    margin-right: 1rem;
 }

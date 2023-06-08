@@ -9,15 +9,22 @@
 
 .title{
     text-align: center;
-    padding-top: 2em;
+    /* padding-top: 2em; */
 }
 
 .generate-button{
+    padding: .75em 1.5em;
     margin: auto;
     display: grid;
     place-items: center;
+    margin-bottom: 2em;
 }
 
 mat-form-field{
     width: 100%;
+}
+
+.action-buttons{
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
